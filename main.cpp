@@ -1,14 +1,23 @@
 #include <iostream>
 
-#include "key_pair.h"
-
+#include "cryptosystem.h"
 
 int main() {
 
-    KeyPair key_pair(5, 10, 0, 10, 10);
-    key_pair.generate_keys();
-    key_pair.getB().print();
-    key_pair.getG().print();
+    Cryptosystem cryptosystem(128, 138, 0, 0.01, 10, 0.1, 10); // n=100, k=110, c=0, r=0.01, s=10, d=0.1, t=10
+    cryptosystem.generate_keys();
+
+    for (int i=0; i<10; i++) {
+        arma::vec ctext = cryptosystem.encrypt(cryptosystem.getG(), false);
+        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
+        std::cout << "Expected false, returned " << std::boolalpha << decryption << std::endl;
+    }
+
+    for (int i=0; i<10; i++) {
+        arma::vec ctext = cryptosystem.encrypt(cryptosystem.getG(), true);
+        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
+        std::cout << "Expected true, returned " << std::boolalpha << decryption << std::endl;
+    }
 
     return 0;
 }

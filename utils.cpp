@@ -1,4 +1,4 @@
-#include "fplll_utils.h"
+#include "utils.h"
 
 fplll::ZZ_mat<mpz_t> std_vector_to_fplll_ZZ_mat(std::vector<std::vector<int>> matrix) {
     if (matrix.empty()) {
