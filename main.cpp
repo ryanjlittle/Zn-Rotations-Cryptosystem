@@ -4,7 +4,7 @@
 
 int main() {
 
-    Cryptosystem cryptosystem(128, 138, 0, 0.01, 10, 0.1, 10); // n=100, k=110, c=0, r=0.01, s=10, d=0.1, t=10
+    Cryptosystem cryptosystem(128, 138, 0, 0.01, 10, 0.1, 10); // n=128, k=138, c=0, r=0.01, s=10, d=0.1, t=10
     cryptosystem.generate_keys();
 
     for (int i=0; i<10; i++) {
