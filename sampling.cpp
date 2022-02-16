@@ -2,10 +2,10 @@
 
 // Returns a vector sampled from the one-dimensional discrete Gaussian D_{Z,s}. This is an implementation of the
 // SampleZ subroutine in section 4.1 of https://ia.cr/2007/432
-std::vector<int> sample_discrete_gaussian_vector(int n, double c, double s, double t) {
+std::vector<int> sample_discrete_gaussian_vector(int n, double s, double t) {
     std::random_device device;
     std::mt19937 generator(device());
-    std::uniform_int_distribution<int> uniform_dist(ceil(c-t*s), floor(c+t*s));
+    std::uniform_int_distribution<int> uniform_dist(ceil(-t*s), floor(t*s));
     std::bernoulli_distribution bernoulli_dist;
 
     std::vector<int> sampled_vector(n);
@@ -22,10 +22,10 @@ std::vector<int> sample_discrete_gaussian_vector(int n, double c, double s, doub
     return sampled_vector;
 }
 
-std::vector<std::vector<int>> sample_discrete_gaussian_vectors(int num_vecs, int n, double c, double s, double t) {
+std::vector<std::vector<int>> sample_discrete_gaussian_vectors(int num_vecs, int n, double s, double t) {
     std::vector<std::vector<int>> sampled_vectors(num_vecs);
     for (int i=0; i<num_vecs; i++) {
-        sampled_vectors.at(i) = sample_discrete_gaussian_vector(n, c, s, t);
+        sampled_vectors.at(i) = sample_discrete_gaussian_vector(n, s, t);
     }
     return sampled_vectors;
 }

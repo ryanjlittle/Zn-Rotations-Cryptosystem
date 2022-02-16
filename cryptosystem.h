@@ -13,14 +13,13 @@ private:
     arma::Mat<int> G; // public key
     const int n;
     const int k;
-    const double c;
     const double r;
     const double s;
     const double d;
     const double t;
 
 public:
-    Cryptosystem(int n, int k, double c, double r, double s, double d, double t) : n(n), k(k), c(c), r(r), s(s), d(d), t(t)  {}
+    Cryptosystem(int n, int k, double r, double s, double d, double t) : n(n), k(k), r(r), s(s), d(d), t(t)  {}
 
     void generate_keys();
 

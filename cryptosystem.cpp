@@ -1,19 +1,26 @@
 #include "cryptosystem.h"
 
+bool matrix_generates_integer_lattice(arma::Mat<int> matrix) {
+    if (matrix.col(0).is_empty()) {
+        return false;
+    }
+    double log_det_val, log_det_sign;
+    arma::log_det(log_det_val, log_det_sign, arma::conv_to<arma::mat>::from(matrix)); // log det more precise than det for large matrices
+    return abs(log_det_val) < log(1.5);
+}
+
 void Cryptosystem::generate_keys() {
     arma::Mat<int> basis;
-    double log_det_val, log_det_sign;
     do {
-        std::vector<std::vector<int>> sampled_matrix = sample_discrete_gaussian_vectors(k, n, c, s, t);
+        std::vector<std::vector<int>> sampled_matrix = sample_discrete_gaussian_vectors(k, n, s, t);
         fplll::ZZ_mat<mpz_t> sampled_matrix_fplll = std_vector_to_fplll_ZZ_mat(sampled_matrix);
 
         fplll::lll_reduction(sampled_matrix_fplll, fplll::LLL_DEF_DELTA, fplll::LLL_DEF_ETA,
                              fplll::LM_FAST, fplll::FT_DEFAULT, 0, fplll::LLL_DEFAULT);
 
         arma::Mat<int> sampled_matrix_arma = fplll_ZZ_mat_to_arma_mat(sampled_matrix_fplll);
-        basis = sampled_matrix_arma.rows(k-n, k-1); // get the last n rows
-        arma::log_det(log_det_val, log_det_sign, arma::conv_to<arma::mat>::from(basis)); // log det more precise than det for large matrices
-    } while (abs(log_det_val) > EPS);
+        basis = sampled_matrix_arma.rows(k-n, k-1).t(); // get the last n rows
+    } while (!matrix_generates_integer_lattice(basis));
 
     B = basis;
     G = B.t() * B;
