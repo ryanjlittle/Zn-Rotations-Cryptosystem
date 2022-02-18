@@ -1,7 +1,5 @@
 #include "sampling.h"
 
-// Returns a vector sampled from the one-dimensional discrete Gaussian D_{Z,s}. This is an implementation of the
-// SampleZ subroutine in section 4.1 of https://ia.cr/2007/432
 std::vector<int> sample_discrete_gaussian_vector(int n, double s, double t) {
     std::random_device device;
     std::mt19937 generator(device());
@@ -22,9 +20,9 @@ std::vector<int> sample_discrete_gaussian_vector(int n, double s, double t) {
     return sampled_vector;
 }
 
-std::vector<std::vector<int>> sample_discrete_gaussian_vectors(int num_vecs, int n, double s, double t) {
-    std::vector<std::vector<int>> sampled_vectors(num_vecs);
-    for (int i=0; i<num_vecs; i++) {
+std::vector<std::vector<int>> sample_discrete_gaussian_vectors(int k, int n, double s, double t) {
+    std::vector<std::vector<int>> sampled_vectors(k);
+    for (int i=0; i<k; i++) {
         sampled_vectors.at(i) = sample_discrete_gaussian_vector(n, s, t);
     }
     return sampled_vectors;
