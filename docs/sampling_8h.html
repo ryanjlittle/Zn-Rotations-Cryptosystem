@@ -63,6 +63,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">sampling.h File Reference</div></div>
 </div><!--header-->
@@ -75,18 +76,24 @@ $(function() {
 </div>
 <p><a href="sampling_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a802b9ac6dc5ed58593a7faa0b205acbb"><td class="memItemLeft" align="right" valign="top"><a id="a802b9ac6dc5ed58593a7faa0b205acbb" name="a802b9ac6dc5ed58593a7faa0b205acbb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CUTOFF_MODIFIER</b>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a802b9ac6dc5ed58593a7faa0b205acbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a08e3e7a4fb8eff5db402cda9b3f355c6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sampling_8h.html#a08e3e7a4fb8eff5db402cda9b3f355c6">sample_discrete_gaussian_vector</a> (int n, double s, double t)</td></tr>
-<tr class="separator:a08e3e7a4fb8eff5db402cda9b3f355c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49bc290f8f9a4beb09ab505972e33e35"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sampling_8h.html#a49bc290f8f9a4beb09ab505972e33e35">sample_discrete_gaussian_vectors</a> (int k, int n, double s, double t)</td></tr>
-<tr class="separator:a49bc290f8f9a4beb09ab505972e33e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa17c6a8cfa0c1328d8f5c588333d1954"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sampling_8h.html#aa17c6a8cfa0c1328d8f5c588333d1954">sample_discrete_gaussian_vector</a> (int n, double s)</td></tr>
+<tr class="separator:aa17c6a8cfa0c1328d8f5c588333d1954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adccadccbb71e454cd11f5fbbf1e2619b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sampling_8h.html#adccadccbb71e454cd11f5fbbf1e2619b">sample_discrete_gaussian_vectors</a> (int k, int n, double s)</td></tr>
+<tr class="separator:adccadccbb71e454cd11f5fbbf1e2619b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Ryan Little </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a08e3e7a4fb8eff5db402cda9b3f355c6" name="a08e3e7a4fb8eff5db402cda9b3f355c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08e3e7a4fb8eff5db402cda9b3f355c6">&#9670;&nbsp;</a></span>sample_discrete_gaussian_vector()</h2>
+<a id="aa17c6a8cfa0c1328d8f5c588333d1954" name="aa17c6a8cfa0c1328d8f5c588333d1954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa17c6a8cfa0c1328d8f5c588333d1954">&#9670;&nbsp;</a></span>sample_discrete_gaussian_vector()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -101,13 +108,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -121,7 +122,6 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">n</td><td>Dimension of vector to generate </td></tr>
     <tr><td class="paramname">s</td><td>Parameter affecting length of sampled vector </td></tr>
-    <tr><td class="paramname">t</td><td>Additional scaling parameter that affects length of sampled vector </td></tr>
   </table>
   </dd>
 </dl>
@@ -129,8 +129,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a49bc290f8f9a4beb09ab505972e33e35" name="a49bc290f8f9a4beb09ab505972e33e35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49bc290f8f9a4beb09ab505972e33e35">&#9670;&nbsp;</a></span>sample_discrete_gaussian_vectors()</h2>
+<a id="adccadccbb71e454cd11f5fbbf1e2619b" name="adccadccbb71e454cd11f5fbbf1e2619b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adccadccbb71e454cd11f5fbbf1e2619b">&#9670;&nbsp;</a></span>sample_discrete_gaussian_vectors()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,13 +151,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -172,7 +166,6 @@ Functions</h2></td></tr>
     <tr><td class="paramname">k</td><td>Number of vectors to sample </td></tr>
     <tr><td class="paramname">n</td><td>Dimension of vectors to be generated </td></tr>
     <tr><td class="paramname">s</td><td>Parameter affecting length of sampled vector </td></tr>
-    <tr><td class="paramname">t</td><td>Additional scaling parameter that affects length of sampled vector </td></tr>
   </table>
   </dd>
 </dl>

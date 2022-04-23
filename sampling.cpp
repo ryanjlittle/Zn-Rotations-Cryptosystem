@@ -1,9 +1,9 @@
 #include "sampling.h"
 
-std::vector<int> sample_discrete_gaussian_vector(int n, double s, double t) {
+std::vector<int> sample_discrete_gaussian_vector(int n, double s) {
     std::random_device device;
     std::mt19937 generator(device());
-    std::uniform_int_distribution<int> uniform_dist(ceil(-t*s), floor(t*s));
+    std::uniform_int_distribution<int> uniform_dist(ceil(-CUTOFF_MODIFIER*s), floor(CUTOFF_MODIFIER*s));
     std::bernoulli_distribution bernoulli_dist;
 
     std::vector<int> sampled_vector(n);
@@ -20,10 +20,10 @@ std::vector<int> sample_discrete_gaussian_vector(int n, double s, double t) {
     return sampled_vector;
 }
 
-std::vector<std::vector<int>> sample_discrete_gaussian_vectors(int k, int n, double s, double t) {
+std::vector<std::vector<int>> sample_discrete_gaussian_vectors(int k, int n, double s) {
     std::vector<std::vector<int>> sampled_vectors(k);
     for (int i=0; i<k; i++) {
-        sampled_vectors.at(i) = sample_discrete_gaussian_vector(n, s, t);
+        sampled_vectors.at(i) = sample_discrete_gaussian_vector(n, s);
     }
     return sampled_vectors;
 }

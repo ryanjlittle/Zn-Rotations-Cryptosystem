@@ -69,20 +69,22 @@ $(function() {
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef ZNROTATIONCRYPTOSYSTEM_SAMPLING_H</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define ZNROTATIONCRYPTOSYSTEM_SAMPLING_H</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include&lt;vector&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include&lt;random&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include&lt;cmath&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include&lt;numeric&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include&lt;algorithm&gt;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>std::vector&lt;int&gt; <a class="code hl_function" href="sampling_8h.html#a08e3e7a4fb8eff5db402cda9b3f355c6">sample_discrete_gaussian_vector</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">double</span> s, <span class="keywordtype">double</span> t);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>std::vector&lt;std::vector&lt;int&gt;&gt; <a class="code hl_function" href="sampling_8h.html#a49bc290f8f9a4beb09ab505972e33e35">sample_discrete_gaussian_vectors</a>(<span class="keywordtype">int</span> k, <span class="keywordtype">int</span> n, <span class="keywordtype">double</span> s, <span class="keywordtype">double</span> t);</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define CUTOFF_MODIFIER   10</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include&lt;vector&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include&lt;random&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include&lt;cmath&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include&lt;numeric&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include&lt;algorithm&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>std::vector&lt;int&gt; <a class="code hl_function" href="sampling_8h.html#aa17c6a8cfa0c1328d8f5c588333d1954">sample_discrete_gaussian_vector</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">double</span> s);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>std::vector&lt;std::vector&lt;int&gt;&gt; <a class="code hl_function" href="sampling_8h.html#adccadccbb71e454cd11f5fbbf1e2619b">sample_discrete_gaussian_vectors</a>(<span class="keywordtype">int</span> k, <span class="keywordtype">int</span> n, <span class="keywordtype">double</span> s);</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif </span><span class="comment">//ZNROTATIONCRYPTOSYSTEM_SAMPLING_H</span></div>
-<div class="ttc" id="asampling_8h_html_a08e3e7a4fb8eff5db402cda9b3f355c6"><div class="ttname"><a href="sampling_8h.html#a08e3e7a4fb8eff5db402cda9b3f355c6">sample_discrete_gaussian_vector</a></div><div class="ttdeci">std::vector&lt; int &gt; sample_discrete_gaussian_vector(int n, double s, double t)</div><div class="ttdef"><b>Definition:</b> sampling.cpp:3</div></div>
-<div class="ttc" id="asampling_8h_html_a49bc290f8f9a4beb09ab505972e33e35"><div class="ttname"><a href="sampling_8h.html#a49bc290f8f9a4beb09ab505972e33e35">sample_discrete_gaussian_vectors</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; int &gt; &gt; sample_discrete_gaussian_vectors(int k, int n, double s, double t)</div><div class="ttdef"><b>Definition:</b> sampling.cpp:23</div></div>
+<div class="ttc" id="asampling_8h_html_aa17c6a8cfa0c1328d8f5c588333d1954"><div class="ttname"><a href="sampling_8h.html#aa17c6a8cfa0c1328d8f5c588333d1954">sample_discrete_gaussian_vector</a></div><div class="ttdeci">std::vector&lt; int &gt; sample_discrete_gaussian_vector(int n, double s)</div><div class="ttdef"><b>Definition:</b> sampling.cpp:3</div></div>
+<div class="ttc" id="asampling_8h_html_adccadccbb71e454cd11f5fbbf1e2619b"><div class="ttname"><a href="sampling_8h.html#adccadccbb71e454cd11f5fbbf1e2619b">sample_discrete_gaussian_vectors</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; int &gt; &gt; sample_discrete_gaussian_vectors(int k, int n, double s)</div><div class="ttdef"><b>Definition:</b> sampling.cpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

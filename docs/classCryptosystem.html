@@ -73,9 +73,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5a024f6fb510fda68261bd9e503e5c73"><td class="memItemLeft" align="right" valign="top"><a id="a5a024f6fb510fda68261bd9e503e5c73" name="a5a024f6fb510fda68261bd9e503e5c73"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Cryptosystem</b> (int n, int k, double r, double s, double d, double t)</td></tr>
-<tr class="separator:a5a024f6fb510fda68261bd9e503e5c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24edc664f7c9de988442c51a329b9d8b"><td class="memItemLeft" align="right" valign="top"><a id="a24edc664f7c9de988442c51a329b9d8b" name="a24edc664f7c9de988442c51a329b9d8b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Cryptosystem</b> (int n, int k, double r, double s, double d)</td></tr>
+<tr class="separator:a24edc664f7c9de988442c51a329b9d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a4170328f46ccfd0ee563e79fd63d4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html#a0a4170328f46ccfd0ee563e79fd63d4b">generate_keys</a> ()</td></tr>
 <tr class="separator:a0a4170328f46ccfd0ee563e79fd63d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55b296e6bb932e3fec9ad368a82e2c76"><td class="memItemLeft" align="right" valign="top">arma::vec&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html#a55b296e6bb932e3fec9ad368a82e2c76">encrypt</a> (arma::Mat&lt; int &gt; pk, bool b)</td></tr>
@@ -88,6 +88,27 @@ const arma::Mat&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bo
 <tr class="memitem:a4477d87e1de18150abb5a4ac97cbe658"><td class="memItemLeft" align="right" valign="top"><a id="a4477d87e1de18150abb5a4ac97cbe658" name="a4477d87e1de18150abb5a4ac97cbe658"></a>
 const arma::Mat&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getG</b> ()</td></tr>
 <tr class="separator:a4477d87e1de18150abb5a4ac97cbe658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b4a3515c8aa204344b0b97d970bebba"><td class="memItemLeft" align="right" valign="top"><a id="a9b4a3515c8aa204344b0b97d970bebba" name="a9b4a3515c8aa204344b0b97d970bebba"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_B</b> (const arma::Mat&lt; int &gt; &amp;b)</td></tr>
+<tr class="separator:a9b4a3515c8aa204344b0b97d970bebba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1402b9affe69674c04d187662f5369d"><td class="memItemLeft" align="right" valign="top"><a id="af1402b9affe69674c04d187662f5369d" name="af1402b9affe69674c04d187662f5369d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_G</b> (const arma::Mat&lt; int &gt; &amp;g)</td></tr>
+<tr class="separator:af1402b9affe69674c04d187662f5369d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2998193055ed3dd496da757c95b1afd5"><td class="memItemLeft" align="right" valign="top"><a id="a2998193055ed3dd496da757c95b1afd5" name="a2998193055ed3dd496da757c95b1afd5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_n</b> (int n)</td></tr>
+<tr class="separator:a2998193055ed3dd496da757c95b1afd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a678245f90ca9ed34599de2963d32c54f"><td class="memItemLeft" align="right" valign="top"><a id="a678245f90ca9ed34599de2963d32c54f" name="a678245f90ca9ed34599de2963d32c54f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_k</b> (int k)</td></tr>
+<tr class="separator:a678245f90ca9ed34599de2963d32c54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acac30b1168b2ff7a8c117983c4d4a8fc"><td class="memItemLeft" align="right" valign="top"><a id="acac30b1168b2ff7a8c117983c4d4a8fc" name="acac30b1168b2ff7a8c117983c4d4a8fc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_r</b> (double r)</td></tr>
+<tr class="separator:acac30b1168b2ff7a8c117983c4d4a8fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a151cdda3157585e2d6c16bec3319e68c"><td class="memItemLeft" align="right" valign="top"><a id="a151cdda3157585e2d6c16bec3319e68c" name="a151cdda3157585e2d6c16bec3319e68c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_s</b> (double s)</td></tr>
+<tr class="separator:a151cdda3157585e2d6c16bec3319e68c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01ebb51fd7cc4eaf0d0da581f1c94542"><td class="memItemLeft" align="right" valign="top"><a id="a01ebb51fd7cc4eaf0d0da581f1c94542" name="a01ebb51fd7cc4eaf0d0da581f1c94542"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_d</b> (double d)</td></tr>
+<tr class="separator:a01ebb51fd7cc4eaf0d0da581f1c94542"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Class to perform key generation, encryption, and decryption. </p>

@@ -20,7 +20,7 @@ bool matrix_generates_integer_lattice(arma::Mat<int> matrix) {
 void Cryptosystem::generate_keys() {
     arma::Mat<int> basis;
     do {
-        std::vector<std::vector<int>> sampled_matrix = sample_discrete_gaussian_vectors(k, n, s, t);
+        std::vector<std::vector<int>> sampled_matrix = sample_discrete_gaussian_vectors(k, n, s);
         fplll::ZZ_mat<mpz_t> sampled_matrix_fplll = std_vector_to_fplll_ZZ_mat(sampled_matrix);
 
         fplll::lll_reduction(sampled_matrix_fplll, fplll::LLL_DEF_DELTA, fplll::LLL_DEF_ETA,
@@ -29,6 +29,7 @@ void Cryptosystem::generate_keys() {
         arma::Mat<int> sampled_matrix_arma = fplll_ZZ_mat_to_arma_mat(sampled_matrix_fplll);
         // get the last n rows of sampled matrix
         basis = sampled_matrix_arma.rows(k-n, k-1).t();
+
     } while (!matrix_generates_integer_lattice(basis));
 
     B = basis;

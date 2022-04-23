@@ -29,40 +29,35 @@ class Cryptosystem {
     /**
      * Dimension.
      */
-    const int n;
+    int n;
 
     /**
      * Number of vectors to sample from discrete Gaussian in key generation. Must be >= n.
      */
-    const int k;
+    int k;
 
     /**
      * Noise parameter used in encryption.
      */
-    const double r;
+    double r;
 
     /**
      * Parameter controlling length of public key basis, used in key generation.
      */
-    const double s;
+    double s;
 
     /**
      * Distance threshold used in decryption.
      */
-    const double d;
-
-    /**
-     * Additional parameter controlling length of public key basis, used in key generation.
-     */
-    const double t;
+    double d;
 
 public:
-    Cryptosystem(int n, int k, double r, double s, double d, double t) : n(n), k(k), r(r), s(s), d(d), t(t)  {}
+    Cryptosystem(int n, int k, double r, double s, double d) : n(n), k(k), r(r), s(s), d(d)  {}
 
-    /**
-     * Generate public and private key pair. Results are stored in class members B (for private key)
-     * and G (for public key).
-     */
+  /**
+   * Generate public and private key pair. Results are stored in class members B (for private key)
+   * and G (for public key).
+   */
     void generate_keys();
 
     /**
@@ -88,6 +83,20 @@ public:
     const arma::Mat<int> &getB() { return B; }
 
     const arma::Mat<int> &getG() { return G; }
+
+    void set_B (const arma::Mat<int> &b) { this->B = b; }
+
+    void set_G (const arma::Mat<int> &g) { this->G = G; }
+
+    void set_n (int n) { this->n = n; }
+
+    void set_k (int k) { this->k = k; }
+
+    void set_r (double r) {this->r = r; }
+
+    void set_s (double s) {this->s = s; }
+
+    void set_d (double d) {this->d = d; }
 };
 
 #endif //ZNROTATIONCRYPTOSYSTEM_CRYPTOSYSTEM_H
