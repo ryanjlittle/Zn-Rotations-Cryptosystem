@@ -1,5 +1,6 @@
 #include <iostream>
 #include "cryptosystem.h"
+#include "generateChallenges.h"
 #include "matplotlib-cpp/matplotlibcpp.h"
 
 namespace plt = matplotlibcpp;
@@ -38,7 +39,6 @@ void generate_plots() {
     int plot_col;
     int plot_row = 0;
 
-    arma::arma_rng::set_seed_random();
     std::cout.precision(3);
 
     for (int n : n_vals) {
@@ -90,8 +90,8 @@ void generate_plots() {
 }
 
 void quick_test() {
-    int n = 128;
-    double r = 0.1;
+    int n = 64;
+    double r = 0.5;
     double d_prime = exp(-M_PI * r * r) / 20.0;
     double d = (1.0 / 12.0 - d_prime) * n;
     int s = 10;
@@ -109,11 +109,24 @@ void quick_test() {
     std::cout << std::fixed << correct_prob_near_lattice << " correctness probability, near-lattice sample" << std::endl;
 }
 
+
+void makeChallenges() {
+    // Modify these values for each challenge
+    int n = 256;
+    double r = 0.081583;
+    double d = 0.0421963 * n;
+    double s = 100;
+    Cryptosystem cryptosystem(n, n+10, r, s, d);
+    generateChallenges(cryptosystem, 20, "challenges/n128_2E-10");
+}
+
+
 int main() {
     // Uncomment one of the following to run a test
 
-    //generate_plots();
-    //quick_test();
+    // quick_test();
+    // generate_plots();
+    makeChallenges();
 
     return 0;
 }

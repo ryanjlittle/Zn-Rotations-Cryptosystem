@@ -70,6 +70,11 @@ $(function() {
 <div class="textblock"><code>#include &lt;fplll.h&gt;</code><br />
 <code>#include &lt;armadillo&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;stdexcept&gt;</code><br />
 </div>
 <p><a href="utils_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -79,6 +84,8 @@ Functions</h2></td></tr>
 <tr class="separator:a289b4bed86d06c32e6d0b273815c202f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02a54700e6fae83d862302290781552a"><td class="memItemLeft" align="right" valign="top">arma::Mat&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a02a54700e6fae83d862302290781552a">fplll_ZZ_mat_to_arma_mat</a> (fplll::ZZ_mat&lt; mpz_t &gt; fplll_matrix)</td></tr>
 <tr class="separator:a02a54700e6fae83d862302290781552a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27a7d63e975c42012455ad9fff01c09b"><td class="memItemLeft" align="right" valign="top">arma::Mat&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a27a7d63e975c42012455ad9fff01c09b">read_from_file</a> (std::string file, int rows, int cols)</td></tr>
+<tr class="separator:a27a7d63e975c42012455ad9fff01c09b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Ryan Little </dd></dl>
@@ -106,6 +113,50 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The matrix in armadillo form. </dd></dl>
+
+</div>
+</div>
+<a id="a27a7d63e975c42012455ad9fff01c09b" name="a27a7d63e975c42012455ad9fff01c09b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27a7d63e975c42012455ad9fff01c09b">&#9670;&nbsp;</a></span>read_from_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arma::Mat&lt; int &gt; read_from_file </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cols</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Reads an integer matrix in from a file. File must be space delimited and contain no additional formatting. Lines in the file will correspond to rows in the matrix.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>Path to the file. </td></tr>
+    <tr><td class="paramname">rows</td><td>Number of rows in matrix </td></tr>
+    <tr><td class="paramname">cols</td><td>Number of columns in matrix </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The matrix from the file, converted to armadillo form. </dd></dl>
 
 </div>
 </div>

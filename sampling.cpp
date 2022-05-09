@@ -1,8 +1,8 @@
 #include "sampling.h"
 
 std::vector<int> sample_discrete_gaussian_vector(int n, double s) {
-    std::random_device device;
-    std::mt19937 generator(device());
+    osuCrypto::PRNG prng;
+    prng.SetSeed(osuCrypto::sysRandomSeed());
     std::uniform_int_distribution<int> uniform_dist(ceil(-CUTOFF_MODIFIER*s), floor(CUTOFF_MODIFIER*s));
     std::bernoulli_distribution bernoulli_dist;
 
@@ -10,9 +10,9 @@ std::vector<int> sample_discrete_gaussian_vector(int n, double s) {
     int x, p;
     for (int i=0; i<n; i++) {
         do {
-            x = uniform_dist(generator);
+            x = uniform_dist(prng);
             bernoulli_dist = std::bernoulli_distribution(exp(-M_PI*pow(x,2) / pow(s, 2)));
-            p = bernoulli_dist(generator);
+            p = bernoulli_dist(prng);
         }
         while (p == 0);
         sampled_vector.at(i) = x;

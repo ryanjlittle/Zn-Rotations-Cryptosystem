@@ -24,7 +24,7 @@ void Cryptosystem::generate_keys() {
         fplll::ZZ_mat<mpz_t> sampled_matrix_fplll = std_vector_to_fplll_ZZ_mat(sampled_matrix);
 
         fplll::lll_reduction(sampled_matrix_fplll, fplll::LLL_DEF_DELTA, fplll::LLL_DEF_ETA,
-                             fplll::LM_FAST, fplll::FT_DEFAULT, 0, fplll::LLL_DEFAULT);
+                             fplll::LM_WRAPPER, fplll::FT_DEFAULT, 0, fplll::LLL_DEFAULT);
 
         arma::Mat<int> sampled_matrix_arma = fplll_ZZ_mat_to_arma_mat(sampled_matrix_fplll);
         // get the last n rows of sampled matrix

@@ -8,11 +8,12 @@
 
 #define CUTOFF_MODIFIER   10
 
-#include<vector>
-#include<random>
-#include<cmath>
-#include<numeric>
-#include<algorithm>
+#include <vector>
+#include <random>
+#include <cmath>
+#include <numeric>
+#include <algorithm>
+#include "cryptoTools/Crypto/PRNG.h"
 
 /**
  * Samples a vector sampled from the one-dimensional discrete Gaussian D_{Z^n,s}. This is an implementation of the

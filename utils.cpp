@@ -32,3 +32,26 @@ arma::Mat<int> fplll_ZZ_mat_to_arma_mat(fplll::ZZ_mat<mpz_t> fplll_matrix) {
     }
     return arma_matrix;
 }
+
+arma::Mat<int> read_from_file(std::string file, int rows, int cols){
+   arma::Mat<int> matrix(rows, cols);
+   std::fstream f(file);
+   if (!f.is_open()) {
+       throw std::runtime_error("Could not open file");
+   }
+   std::string line;
+   for (int i=0; i<rows; i++) {
+       if (!getline(f, line)) {
+           throw std::runtime_error("Not enough rows in matrix file");
+       }
+       std::istringstream sstream(line);
+       int val;
+       for (int j=0; j<cols; j++) {
+          if (!(sstream >> val)) {
+              throw std::runtime_error("Not enough columns in matrix file");
+          }
+          matrix(i,j) = val;
+       }
+   }
+   return matrix;
+}
