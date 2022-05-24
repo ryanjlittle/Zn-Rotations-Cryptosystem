@@ -11,7 +11,7 @@ void generateChallenges(Cryptosystem cryptosystem, int num_challenges, std::stri
     std::ofstream public_key_file(path + "/public_key");
 
     cryptosystem.getB().raw_print(private_key_file);
-    cryptosystem.getG().raw_print(public_key_file);
+    cryptosystem.getG_inv().raw_print(public_key_file);
 
     private_key_file.close();
     public_key_file.close();
@@ -22,7 +22,7 @@ void generateChallenges(Cryptosystem cryptosystem, int num_challenges, std::stri
     for (int i=0; i<num_challenges; i++) {
         bool ptext = prng.getBit();
 
-        arma::vec ctext = cryptosystem.encrypt(cryptosystem.getG(), ptext);
+        arma::vec ctext = cryptosystem.encrypt(cryptosystem.getG_inv(), ptext);
         assert(cryptosystem.decrypt(cryptosystem.getB(), ctext) == ptext);
 
         std::ofstream plaintext_file(path + "/plaintext" + std::to_string(i));
