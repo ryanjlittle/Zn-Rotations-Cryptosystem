@@ -63,13 +63,16 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">cryptosystem.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="sampling_8h_source.html">sampling.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="utils_8h_source.html">utils.h</a>&quot;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
+<code>#include &quot;eigenmvn/eigenmvn.h&quot;</code><br />
 </div>
 <p><a href="cryptosystem_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -77,6 +80,21 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html">Cryptosystem</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a6ebf6899d6c1c8b7b9d09be872c05aae"><td class="memItemLeft" align="right" valign="top"><a id="a6ebf6899d6c1c8b7b9d09be872c05aae" name="a6ebf6899d6c1c8b7b9d09be872c05aae"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>EPS</b>&#160;&#160;&#160;1e-30f</td></tr>
+<tr class="separator:a6ebf6899d6c1c8b7b9d09be872c05aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a6e2925686b65e75db8606267c2072f55"><td class="memItemLeft" align="right" valign="top"><a id="a6e2925686b65e75db8606267c2072f55" name="a6e2925686b65e75db8606267c2072f55"></a>
+typedef Eigen::Matrix&lt; mpfr::mpreal, Eigen::Dynamic, Eigen::Dynamic &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>MatrixXm</b></td></tr>
+<tr class="separator:a6e2925686b65e75db8606267c2072f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47632d8b411fc95e81eb424fc1d91059"><td class="memItemLeft" align="right" valign="top"><a id="a47632d8b411fc95e81eb424fc1d91059" name="a47632d8b411fc95e81eb424fc1d91059"></a>
+typedef Eigen::Vector&lt; mpfr::mpreal, Eigen::Dynamic &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>VectorXm</b></td></tr>
+<tr class="separator:a47632d8b411fc95e81eb424fc1d91059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Ryan Little </dd></dl>

@@ -63,12 +63,14 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">utils.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;fplll.h&gt;</code><br />
-<code>#include &lt;armadillo&gt;</code><br />
+<div class="textblock"><code>#include &lt;Eigen/Dense&gt;</code><br />
+<code>#include &lt;EigenUnsupported/MPRealSupport&gt;</code><br />
+<code>#include &lt;fplll.h&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
@@ -78,26 +80,35 @@ $(function() {
 </div>
 <p><a href="utils_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a6e2925686b65e75db8606267c2072f55"><td class="memItemLeft" align="right" valign="top"><a id="a6e2925686b65e75db8606267c2072f55" name="a6e2925686b65e75db8606267c2072f55"></a>
+typedef Eigen::Matrix&lt; mpfr::mpreal, Eigen::Dynamic, Eigen::Dynamic &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>MatrixXm</b></td></tr>
+<tr class="separator:a6e2925686b65e75db8606267c2072f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47632d8b411fc95e81eb424fc1d91059"><td class="memItemLeft" align="right" valign="top"><a id="a47632d8b411fc95e81eb424fc1d91059" name="a47632d8b411fc95e81eb424fc1d91059"></a>
+typedef Eigen::Vector&lt; mpfr::mpreal, Eigen::Dynamic &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>VectorXm</b></td></tr>
+<tr class="separator:a47632d8b411fc95e81eb424fc1d91059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a289b4bed86d06c32e6d0b273815c202f"><td class="memItemLeft" align="right" valign="top">fplll::ZZ_mat&lt; mpz_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a289b4bed86d06c32e6d0b273815c202f">std_vector_to_fplll_ZZ_mat</a> (std::vector&lt; std::vector&lt; int &gt; &gt; matrix)</td></tr>
 <tr class="separator:a289b4bed86d06c32e6d0b273815c202f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02a54700e6fae83d862302290781552a"><td class="memItemLeft" align="right" valign="top">arma::Mat&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a02a54700e6fae83d862302290781552a">fplll_ZZ_mat_to_arma_mat</a> (fplll::ZZ_mat&lt; mpz_t &gt; fplll_matrix)</td></tr>
-<tr class="separator:a02a54700e6fae83d862302290781552a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27a7d63e975c42012455ad9fff01c09b"><td class="memItemLeft" align="right" valign="top">arma::Mat&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a27a7d63e975c42012455ad9fff01c09b">read_from_file</a> (std::string file, int rows, int cols)</td></tr>
-<tr class="separator:a27a7d63e975c42012455ad9fff01c09b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ac3fecc5f50039c7de274eeb5e57d4d"><td class="memItemLeft" align="right" valign="top">MatrixXm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a8ac3fecc5f50039c7de274eeb5e57d4d">fplll_ZZ_mat_to_Eigen_mat</a> (fplll::ZZ_mat&lt; mpz_t &gt; fplll_matrix)</td></tr>
+<tr class="separator:a8ac3fecc5f50039c7de274eeb5e57d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a4565cb4867cb40f98b006352c13dc5"><td class="memItemLeft" align="right" valign="top">MatrixXm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a6a4565cb4867cb40f98b006352c13dc5">read_matrix_from_file</a> (std::string file, int rows, int cols)</td></tr>
+<tr class="separator:a6a4565cb4867cb40f98b006352c13dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Ryan Little </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a02a54700e6fae83d862302290781552a" name="a02a54700e6fae83d862302290781552a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02a54700e6fae83d862302290781552a">&#9670;&nbsp;</a></span>fplll_ZZ_mat_to_arma_mat()</h2>
+<a id="a8ac3fecc5f50039c7de274eeb5e57d4d" name="a8ac3fecc5f50039c7de274eeb5e57d4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ac3fecc5f50039c7de274eeb5e57d4d">&#9670;&nbsp;</a></span>fplll_ZZ_mat_to_Eigen_mat()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arma::Mat&lt; int &gt; fplll_ZZ_mat_to_arma_mat </td>
+          <td class="memname">MatrixXm fplll_ZZ_mat_to_Eigen_mat </td>
           <td>(</td>
           <td class="paramtype">fplll::ZZ_mat&lt; mpz_t &gt;&#160;</td>
           <td class="paramname"><em>fplll_matrix</em></td><td>)</td>
@@ -105,25 +116,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Converts a matrix from fplll form to armadillo form.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p >Converts a matrix from fplll form to Eigen form (with mpfr type) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fplll_matrix</td><td>A fplll integer matrix. </td></tr>
+    <tr><td class="paramname">fplll_matrix</td><td>A fplll integer matrix </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The matrix in armadillo form. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The matrix in Eigen form </dd></dl>
 
 </div>
 </div>
-<a id="a27a7d63e975c42012455ad9fff01c09b" name="a27a7d63e975c42012455ad9fff01c09b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27a7d63e975c42012455ad9fff01c09b">&#9670;&nbsp;</a></span>read_from_file()</h2>
+<a id="a6a4565cb4867cb40f98b006352c13dc5" name="a6a4565cb4867cb40f98b006352c13dc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a4565cb4867cb40f98b006352c13dc5">&#9670;&nbsp;</a></span>read_matrix_from_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arma::Mat&lt; int &gt; read_from_file </td>
+          <td class="memname">MatrixXm read_matrix_from_file </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>file</em>, </td>
@@ -156,7 +166,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The matrix from the file, converted to armadillo form. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An Eigen matrix with mpfr entries containing the matrix from the file. </dd></dl>
 
 </div>
 </div>

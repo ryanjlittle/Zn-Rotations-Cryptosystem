@@ -78,22 +78,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a24edc664f7c9de988442c51a329b9d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a4170328f46ccfd0ee563e79fd63d4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html#a0a4170328f46ccfd0ee563e79fd63d4b">generate_keys</a> ()</td></tr>
 <tr class="separator:a0a4170328f46ccfd0ee563e79fd63d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55b296e6bb932e3fec9ad368a82e2c76"><td class="memItemLeft" align="right" valign="top">arma::vec&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html#a55b296e6bb932e3fec9ad368a82e2c76">encrypt</a> (arma::Mat&lt; int &gt; pk, bool b)</td></tr>
-<tr class="separator:a55b296e6bb932e3fec9ad368a82e2c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00bd4de630d5569f2c02bae03d533536"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html#a00bd4de630d5569f2c02bae03d533536">decrypt</a> (arma::Mat&lt; int &gt; sk, arma::vec c)</td></tr>
-<tr class="separator:a00bd4de630d5569f2c02bae03d533536"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab05ee4ba9abe94f9768faa8f10568fc9"><td class="memItemLeft" align="right" valign="top"><a id="ab05ee4ba9abe94f9768faa8f10568fc9" name="ab05ee4ba9abe94f9768faa8f10568fc9"></a>
-const arma::Mat&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getB</b> ()</td></tr>
-<tr class="separator:ab05ee4ba9abe94f9768faa8f10568fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4477d87e1de18150abb5a4ac97cbe658"><td class="memItemLeft" align="right" valign="top"><a id="a4477d87e1de18150abb5a4ac97cbe658" name="a4477d87e1de18150abb5a4ac97cbe658"></a>
-const arma::Mat&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getG</b> ()</td></tr>
-<tr class="separator:a4477d87e1de18150abb5a4ac97cbe658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b4a3515c8aa204344b0b97d970bebba"><td class="memItemLeft" align="right" valign="top"><a id="a9b4a3515c8aa204344b0b97d970bebba" name="a9b4a3515c8aa204344b0b97d970bebba"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_B</b> (const arma::Mat&lt; int &gt; &amp;b)</td></tr>
-<tr class="separator:a9b4a3515c8aa204344b0b97d970bebba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1402b9affe69674c04d187662f5369d"><td class="memItemLeft" align="right" valign="top"><a id="af1402b9affe69674c04d187662f5369d" name="af1402b9affe69674c04d187662f5369d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_G</b> (const arma::Mat&lt; int &gt; &amp;g)</td></tr>
-<tr class="separator:af1402b9affe69674c04d187662f5369d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d9a66f50e998c547c270f7caa5ac142"><td class="memItemLeft" align="right" valign="top">VectorXm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html#a0d9a66f50e998c547c270f7caa5ac142">encrypt</a> (MatrixXm pk, bool b)</td></tr>
+<tr class="separator:a0d9a66f50e998c547c270f7caa5ac142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a905b84e39ec8c3f630b5ce15b46e4fa2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptosystem.html#a905b84e39ec8c3f630b5ce15b46e4fa2">decrypt</a> (MatrixXm sk, VectorXm c)</td></tr>
+<tr class="separator:a905b84e39ec8c3f630b5ce15b46e4fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2eb6b6725f4403ccbfb17fe102ec1c8"><td class="memItemLeft" align="right" valign="top"><a id="ac2eb6b6725f4403ccbfb17fe102ec1c8" name="ac2eb6b6725f4403ccbfb17fe102ec1c8"></a>
+const MatrixXm &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getB</b> ()</td></tr>
+<tr class="separator:ac2eb6b6725f4403ccbfb17fe102ec1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a556b7686c2fc750de72d2a0370f990f9"><td class="memItemLeft" align="right" valign="top"><a id="a556b7686c2fc750de72d2a0370f990f9" name="a556b7686c2fc750de72d2a0370f990f9"></a>
+const MatrixXm &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getG_inv</b> ()</td></tr>
+<tr class="separator:a556b7686c2fc750de72d2a0370f990f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8052a489d6aec333bc193f5c33da9fa9"><td class="memItemLeft" align="right" valign="top"><a id="a8052a489d6aec333bc193f5c33da9fa9" name="a8052a489d6aec333bc193f5c33da9fa9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_B</b> (const MatrixXm &amp;b)</td></tr>
+<tr class="separator:a8052a489d6aec333bc193f5c33da9fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebaf64be969414cbc06d4ecb20abca37"><td class="memItemLeft" align="right" valign="top"><a id="aebaf64be969414cbc06d4ecb20abca37" name="aebaf64be969414cbc06d4ecb20abca37"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_G_inv</b> (MatrixXm &amp;g_inv)</td></tr>
+<tr class="separator:aebaf64be969414cbc06d4ecb20abca37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2998193055ed3dd496da757c95b1afd5"><td class="memItemLeft" align="right" valign="top"><a id="a2998193055ed3dd496da757c95b1afd5" name="a2998193055ed3dd496da757c95b1afd5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_n</b> (int n)</td></tr>
 <tr class="separator:a2998193055ed3dd496da757c95b1afd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,8 +113,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_d</b> (double d)<
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Class to perform key generation, encryption, and decryption. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a00bd4de630d5569f2c02bae03d533536" name="a00bd4de630d5569f2c02bae03d533536"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00bd4de630d5569f2c02bae03d533536">&#9670;&nbsp;</a></span>decrypt()</h2>
+<a id="a905b84e39ec8c3f630b5ce15b46e4fa2" name="a905b84e39ec8c3f630b5ce15b46e4fa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a905b84e39ec8c3f630b5ce15b46e4fa2">&#9670;&nbsp;</a></span>decrypt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -122,13 +122,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_d</b> (double d)<
         <tr>
           <td class="memname">bool Cryptosystem::decrypt </td>
           <td>(</td>
-          <td class="paramtype">arma::Mat&lt; int &gt;&#160;</td>
+          <td class="paramtype">MatrixXm&#160;</td>
           <td class="paramname"><em>sk</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">arma::vec&#160;</td>
+          <td class="paramtype">VectorXm&#160;</td>
           <td class="paramname"><em>c</em>&#160;</td>
         </tr>
         <tr>
@@ -150,16 +150,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_d</b> (double d)<
 
 </div>
 </div>
-<a id="a55b296e6bb932e3fec9ad368a82e2c76" name="a55b296e6bb932e3fec9ad368a82e2c76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55b296e6bb932e3fec9ad368a82e2c76">&#9670;&nbsp;</a></span>encrypt()</h2>
+<a id="a0d9a66f50e998c547c270f7caa5ac142" name="a0d9a66f50e998c547c270f7caa5ac142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d9a66f50e998c547c270f7caa5ac142">&#9670;&nbsp;</a></span>encrypt()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arma::vec Cryptosystem::encrypt </td>
+          <td class="memname">VectorXm Cryptosystem::encrypt </td>
           <td>(</td>
-          <td class="paramtype">arma::Mat&lt; int &gt;&#160;</td>
+          <td class="paramtype">MatrixXm&#160;</td>
           <td class="paramname"><em>pk</em>, </td>
         </tr>
         <tr>
@@ -175,10 +175,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_d</b> (double d)<
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Encrypts a bit under a public key. If b=1, ciphertext is sampled uniformly from [0,1)^n. Otherwise, ciphertext is sampled from continuous Gaussian with covariance matrix r^2*G^(-1), and taken modulo 1.</p>
+<p >Encrypts a bit under a public key. If b=2, ciphertext is sampled uniformly from [0,1)^n. Otherwise, ciphertext is sampled from continuous Gaussian with covariance matrix r^2*G^{-1}, and taken modulo 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pk</td><td>The public key, i.e. G = (B^T)B </td></tr>
+    <tr><td class="paramname">pk</td><td>The public key, G^{-1} </td></tr>
     <tr><td class="paramname">b</td><td>Plaintext bit to be encrypted </td></tr>
   </table>
   </dd>
@@ -201,7 +201,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_d</b> (double d)<
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Generate public and private key pair. Results are stored in class members B (for private key) and G (for public key). </p>
+<p >Generate public and private key pair. Results are stored in class members B (for private key) and G_inv (for public key). </p>
 
 </div>
 </div>

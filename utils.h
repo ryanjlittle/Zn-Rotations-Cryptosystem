@@ -6,7 +6,6 @@
 #include <Eigen/Dense>
 #include <EigenUnsupported/MPRealSupport>
 #include <fplll.h>
-#include <armadillo>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -17,7 +16,7 @@
 #ifndef ZNROTATIONCRYPTOSYSTEM_FPLLL_UTILS_H
 #define ZNROTATIONCRYPTOSYSTEM_FPLLL_UTILS_H
 
-typedef Eigen::Matrix<mpfr::mpreal, Eigen::Dynamic, Eigen::Dynamic> EigenMatrixXm;
+typedef Eigen::Matrix<mpfr::mpreal, Eigen::Dynamic, Eigen::Dynamic> MatrixXm;
 typedef Eigen::Vector<mpfr::mpreal, Eigen::Dynamic> VectorXm;
 
 /**
@@ -29,25 +28,11 @@ typedef Eigen::Vector<mpfr::mpreal, Eigen::Dynamic> VectorXm;
 fplll::ZZ_mat<mpz_t> std_vector_to_fplll_ZZ_mat(std::vector<std::vector<int>> matrix);
 
 /**
- * Converts a matrix from fplll form to armadillo form.
- *
- * @param fplll_matrix A fplll integer matrix.
- * @return The matrix in armadillo form.
- */
-arma::Mat<long> fplll_ZZ_mat_to_arma_mat(fplll::ZZ_mat<mpz_t> fplll_matrix);
-
-
-/**
- * Converts a matrix from fplll form to Eigen form (with arbitrary precision mpfr type)
+ * Converts a matrix from fplll form to Eigen form (with mpfr type)
  * @param fplll_matrix A fplll integer matrix
  * @return The matrix in Eigen form
  */
-EigenMatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix);
-
-arma::Mat<long> eigen_mat_to_arma_mat(EigenMatrixXm eigen_matrix);
-
-
-EigenMatrixXm arma_mat_to_eigen_mat(arma::Mat<long> arma_matrix);
+MatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix);
 
 /**
  * Reads an integer matrix in from a file. File must be space delimited and contain no additional formatting. Lines in
@@ -56,8 +41,8 @@ EigenMatrixXm arma_mat_to_eigen_mat(arma::Mat<long> arma_matrix);
  * @param file Path to the file.
  * @param rows Number of rows in matrix
  * @param cols Number of columns in matrix
- * @return The matrix from the file, converted to armadillo form.
+ * @return An Eigen matrix with mpfr entries containing the matrix from the file.
  */
-arma::Mat<long> read_from_file(std::string file, int rows, int cols);
+MatrixXm read_matrix_from_file(std::string file, int rows, int cols);
 
 #endif //ZNROTATIONCRYPTOSYSTEM_FPLLL_UTILS_H

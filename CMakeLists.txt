@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(ZnRotationCryptosystem)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -lpython3.10 -larmadillo -lfplll -lmpfr -lgmp")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -lfplll -lmpfr -lgmp -lpython3.10")
 
 add_executable(ZnRotationCryptosystem main.cpp cryptosystem.cpp sampling.cpp utils.cpp generateChallenges.cpp)
 
