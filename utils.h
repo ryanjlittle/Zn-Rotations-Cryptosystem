@@ -4,7 +4,7 @@
  */
 
 #include <Eigen/Dense>
-#include <EigenUnsupported/MPRealSupport>
+#include <eigen3/unsupported/Eigen/MPRealSupport>
 #include <fplll.h>
 #include <vector>
 #include <string>
