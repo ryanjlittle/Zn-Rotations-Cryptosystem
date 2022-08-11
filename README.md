@@ -7,6 +7,7 @@ An implementation of the [BGPS cryptosystem](https://eprint.iacr.org/2021/1548.p
 The project relies on the following dependencies:
 - [fplll](https://github.com/fplll/fplll) 
 - [Eigen](https://eigen.tuxfamily.org)
+- [CryptoTools](https://github.com/ladnir/cryptoTools)
 - [MPFR](https://www.mpfr.org/)
 - Python 3.10 (optional, only needed for generating plots)
 
@@ -14,10 +15,13 @@ By default, header files for Eigen unsupported modules are installed at `/usr/in
 
 ## Building and running 
 
+Install all dependencies above.
+
 Clone the repo. Make sure you clone the submodule as well, which can be done with the `--recursive` flag.
 
 `$ git clone --recursive https://github.com/ryanjlittle/Zn-Rotations-Cryptosystem`
 
 The project can be built using Cmake:
 
-`$ cmake --build . --target ZnRotationCryptosystem.`
+
+`$ cmake . && cmake --build . --target ZnRotationCryptosystem`
