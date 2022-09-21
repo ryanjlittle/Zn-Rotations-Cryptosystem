@@ -11,7 +11,7 @@
 #include <math.h>
 #include "eigenmvn/eigenmvn.h"
 
-#define EPS 1e-30f
+#define EPS 1e-40f
 
 typedef Eigen::Matrix<mpfr::mpreal, Eigen::Dynamic, Eigen::Dynamic> MatrixXm;
 typedef Eigen::Vector<mpfr::mpreal, Eigen::Dynamic> VectorXm;

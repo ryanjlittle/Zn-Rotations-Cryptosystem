@@ -21,7 +21,7 @@ MatrixXm apply_gram_schmidt(MatrixXm matrix) {
     for (int i=1; i<cols; i++) {
         VectorXm orthonormalized_col = matrix.col(i);
         for (int j=0; j<i; j++) {
-            if (!orthonormalized.col(j).isZero(1e-10)) {
+            if (!orthonormalized.col(j).isZero(EPS)) {
                 orthonormalized_col -= project(orthonormalized.col(j), matrix.col(i));
             }
         }
@@ -32,32 +32,25 @@ MatrixXm apply_gram_schmidt(MatrixXm matrix) {
 
 
 MatrixXm convert_to_basis(MatrixXm gen_set) {
-
-    gen_set = MatrixXm(3,4);
-    gen_set << 1, 2, 3, 4,
-               0, 1, 0, 2,
-               1, 3, 3, 6;
+//    gen_set = MatrixXm(3,4);
+//    gen_set << 1, 2, 3, 4,
+//               0, 1, 0, 2,
+//               1, 3, 3, 6;
     int m = gen_set.rows();
     int N = gen_set.cols();
 
     bool swap_condition;
     do
     {
-
         Eigen::HouseholderQR<MatrixXm> QR(gen_set);
 
         MatrixXm Q = QR.householderQ();
         MatrixXm R = QR.matrixQR().triangularView<Eigen::Upper>();
 
-
-        std::cout << "Q:\n" << Q << std::endl;
-        std::cout << "R:\n" << R << std::endl;
-
+//        std::cout << "Q:\n" << Q << std::endl;
+//        std::cout << "R:\n" << R << std::endl;
 
         MatrixXm basis;
-
-        std::cout << "Before size reduce:\n" << gen_set <<std::endl;
-
 
         std::vector<int> non_zero_gram_schmidt_indices, zero_gram_schmidt_indices;
         non_zero_gram_schmidt_indices.push_back(0);
@@ -65,10 +58,9 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
         for (int i = 1; i < N; i++)
         {
             int j = k-1;
-            if (abs(R(k, i)) > 1e-10)
+            if (k < m && abs(R(k, i)) > EPS)
             {
                 k++;
-                std::cout << "col " << k << " is a pivot column\n";
                 non_zero_gram_schmidt_indices.push_back(i);
             } else {
                 zero_gram_schmidt_indices.push_back(i);
@@ -82,18 +74,16 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
             }
         }
 
-
-
-        std::cout << "R:\n" << R <<std::endl;
-        std::cout << "QR:\n" << Q * R << std::endl;
-        std::cout << "B after size reduce:\n" << gen_set <<std::endl ;
+//        std::cout << "R:\n" << R <<std::endl;
+//        std::cout << "QR:\n" << Q * R << std::endl;
+//        std::cout << "B after size reduce:\n" << gen_set <<std::endl ;
 
 
         // Filter out identically zero columns
         // in addition delete zero columns from R
         for (int i = N - 1; i >= 0; i--)
         {
-            if (gen_set.col(i).isZero(1e-10))
+            if (gen_set.col(i).isZero(EPS))
             {
                 N--;
                 gen_set.block(0, i, m, N - i) = gen_set.rightCols(N - i);
@@ -103,32 +93,41 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
             }
         }
 
-        std::cout << "After filtering:\n" << gen_set << std::endl;
 
         std::cout << "zero indices:\n";
         for (int i : zero_gram_schmidt_indices) {
             std::cout << i << " ";
         }
         std::cout << std::endl;
-        std::cout << "nonzero indices:\n";
-        for (int i : non_zero_gram_schmidt_indices) {
-            std::cout << i << " ";
-        }
-        std::cout << std::endl;
 
         swap_condition = false;
-        if (zero_gram_schmidt_indices.at(0) > 0)
-        {
+
+        QR = Eigen::HouseholderQR<MatrixXm>(gen_set);
+        R = QR.matrixQR().triangularView<Eigen::Upper>();
+        int first_non_zero_gram_schmidt_index;
+        for (int i=1; i<m; i++) {
+            if (abs(R(i,i)) < EPS) {
+                swap_condition = true;
+                first_non_zero_gram_schmidt_index = i;
+                break;
+            }
+        }
+        if (!swap_condition && m < N) {
             swap_condition = true;
+            first_non_zero_gram_schmidt_index = m;
+        }
+
+        std::cout << "R:\n" << R << std::endl;
+        if (swap_condition)
+        {
             // todo: use the fancier version of swapping
-            MatrixXm temp = gen_set.col(zero_gram_schmidt_indices.at(0));
-            gen_set.col(zero_gram_schmidt_indices.at(0)) = gen_set.col(zero_gram_schmidt_indices.at(0)-1);
-            gen_set.col(zero_gram_schmidt_indices.at(0)-1) = temp;
+            MatrixXm temp = gen_set.col(first_non_zero_gram_schmidt_index);
+            gen_set.col(first_non_zero_gram_schmidt_index) = gen_set.col(first_non_zero_gram_schmidt_index-1);
+            gen_set.col(first_non_zero_gram_schmidt_index-1) = temp;
         }
     } while(swap_condition);
 
     return gen_set;
-
 }
 
 
@@ -138,25 +137,19 @@ void Cryptosystem::generate_keys() {
     do {
         std::vector<std::vector<int>> gen_set = sample_discrete_gaussian_vectors(k, n, s);
         MatrixXm gen_set_eigen = std_vector_to_Eigen_mat(gen_set);
-        MatrixXm basis = convert_to_basis(gen_set_eigen);
+        basis = convert_to_basis(gen_set_eigen);
 
         std::cout << "BASIS:\n" << basis << std::endl;
 
-//        fplll::ZZ_mat<mpz_t> sampled_matrix_fplll = std_vector_to_fplll_ZZ_mat(sampled_matrix);
+//        fplll::ZZ_mat<mpz_t> sampled_matrix_fplll = std_vector_to_fplll_ZZ_mat(gen_set);
 //
 //        fplll::lll_reduction(sampled_matrix_fplll, fplll::LLL_DEF_DELTA, fplll::LLL_DEF_ETA,
 //            fplll::LM_WRAPPER, fplll::FT_DEFAULT, 0, fplll::LLL_EARLY_RED | fplll::LLL_VERBOSE);
-//
 //        MatrixXm sampled_matrix_eigen = fplll_ZZ_mat_to_Eigen_mat(sampled_matrix_fplll);
 //
 //        // get the last n rows of sampled matrix
 //        basis = sampled_matrix_eigen.block(k-n, 0, n, n);
-
-
-
         // Loop until 0.5 < det(basis) < 1.5, to ensure basis actually generates Z^n
-
-
     } while (!(0.5 < abs(basis.determinant()) && abs(basis.determinant()) < 1.5));
 
     MatrixXm G = basis.transpose() * basis;
@@ -166,6 +159,9 @@ void Cryptosystem::generate_keys() {
 
     // Assert that the computed inverse is correct
     MatrixXm identity = MatrixXm::Identity(n, n);
+    std::cout << "G_inv:\n" << G_inv <<std::endl;
+    std::cout << "G:\n" <<  G <<std::endl;
+    std::cout << "G_inv * G:\n" << G_inv * G <<std::endl;
     assert((G_inv * G).isApprox(identity, EPS));
     assert((G * G_inv).isApprox(identity, EPS));
 
