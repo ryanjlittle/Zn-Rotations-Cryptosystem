@@ -3,7 +3,7 @@
  * @author Ryan Little
  */
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 #include <eigen3/unsupported/Eigen/MPRealSupport>
 #include <fplll.h>
 #include <vector>
@@ -20,7 +20,7 @@ typedef Eigen::Matrix<mpfr::mpreal, Eigen::Dynamic, Eigen::Dynamic> MatrixXm;
 typedef Eigen::Vector<mpfr::mpreal, Eigen::Dynamic> VectorXm;
 
 /**
- * Converts a matrix from std::vector form to fplll form.
+ * Converts a matrix from std::vector form to fplll form. This produces a set of row vectors.
  *
  * @param matrix A std::vector of std::vectors.
  * @return The matrix in fplll format.
@@ -33,6 +33,9 @@ fplll::ZZ_mat<mpz_t> std_vector_to_fplll_ZZ_mat(std::vector<std::vector<int>> ma
  * @return The matrix in Eigen form
  */
 MatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix);
+
+
+MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix);
 
 /**
  * Reads an integer matrix in from a file. File must be space delimited and contain no additional formatting. Lines in

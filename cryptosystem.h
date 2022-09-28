@@ -57,6 +57,11 @@ class Cryptosystem {
      */
     double d;
 
+    /**
+     * Redundency parameter
+     */
+     int h;
+
   public:
     Cryptosystem(int n, int k, double r, double s, double d) : n(n), k(k), r(r), s(s), d(d)  {}
 
@@ -85,6 +90,28 @@ class Cryptosystem {
      * @return   The decrypted ciphertext
      */
     bool decrypt(MatrixXm sk, VectorXm c);
+
+    /**
+     * Encodes a bit as a m-repetition code (by repeating it m times), and encrypts each repetition separately under
+     * a given public key in the standard way. The ciphertexts are returned as a vector of length m.
+     *
+     * @param pk The public key, G^{-1}
+     * @param b  Plaintext bit to be encrypted
+     * @param m  Number of repetitions in repetition code. Should be odd.
+     * @return   A vector of length m, where each entry is a ciphertext of bit b under key pk.
+     */
+    std::vector<VectorXm> encrypt_rep_code(MatrixXm pk, bool b, int m);
+
+    /**
+     * Decrypts and decodes a length m repetition code of ciphertexts. Returns the value of the majority of decrypted
+     * ciphertexts (assuming odd m).
+     *
+     * @param sk The private key
+     * @param c  Vector of ciphertexts, of length m
+     * @param m  Number of repetitions in repetition code. Should be odd.
+     * @return   The decrypted and decoded ciphertext
+     */
+    bool decrypt_rep_code(MatrixXm sk, std::vector<VectorXm> c, int m);
 
     const MatrixXm &getB() { return B; }
 

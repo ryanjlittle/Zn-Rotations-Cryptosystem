@@ -8,8 +8,10 @@ namespace plt = matplotlibcpp;
 double decryption_correctness_prob_uniform(Cryptosystem cryptosystem, int num_trials) {
     int correct_decryptions = 0;
     for (int i = 0; i < num_trials; i++) {
-        VectorXm ctext = cryptosystem.encrypt(cryptosystem.getG_inv(), true);
-        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
+//        VectorXm ctext = cryptosystem.encrypt(cryptosystem.getG_inv(), true);
+//        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
+        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.getG_inv(), true, 3);
+        bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.getB(), ctext, 3);
         if (decryption) {
             correct_decryptions++;
         }
@@ -20,8 +22,10 @@ double decryption_correctness_prob_uniform(Cryptosystem cryptosystem, int num_tr
 double decryption_correctness_prob_near_lattice(Cryptosystem cryptosystem, int num_trials) {
     int correct_decryptions = 0;
     for (int i = 0; i < num_trials; i++) {
-        VectorXm ctext = cryptosystem.encrypt(cryptosystem.getG_inv(), false);
-        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
+//        VectorXm ctext = cryptosystem.encrypt(cryptosystem.getG_inv(), false);
+//        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
+        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.getG_inv(), false, 3);
+        bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.getB(), ctext, 3);
         if (!decryption) {
             correct_decryptions++;
         }
@@ -31,7 +35,7 @@ double decryption_correctness_prob_near_lattice(Cryptosystem cryptosystem, int n
 
 void generate_plots() {
     mpfr::mpreal::set_default_prec(256);
-    int num_trials = 1000;
+    int num_trials = 100;
     int s = 10;
     std::vector<int> n_vals {32, 64, 128};
     std::vector<double> r_vals {0.1, 0.25, 0.4};
@@ -92,13 +96,13 @@ void generate_plots() {
 
 void quick_test() {
     mpfr::mpreal::set_default_prec(256);
-    int n = 64;
-    double r = 0.5;
+    int n = 128;
+    double r = 0.8;
     double d_prime = exp(-M_PI * r * r) / 20.0;
     double d = (1.0 / 12.0 - d_prime) * n;
     int s = 10;
     int k = n + 10;
-    int num_trials = 10;
+    int num_trials = 50;
 
     Cryptosystem cryptosystem(n, k, r, s, d);
     std::cout << "Generating keys..." << std::endl;
@@ -115,21 +119,21 @@ void quick_test() {
 void makeChallenges() {
     mpfr::mpreal::set_default_prec(256);
     // Modify these values for each challenge
-    int n = 128;
+    int n = 512;
     double r = 0.081583;
     double d = 0.0421963 * n;
     double s = 100;
     Cryptosystem cryptosystem(n, n+10, r, s, d);
-    generateChallenges(cryptosystem, 20, "challenges/n128_2E-10");
+    generateChallenges(cryptosystem, 20, "challenges/n512_2E-40");
 }
 
 
 int main() {
     // Uncomment one of the following to run a test
 
-    // quick_test();
-    // generate_plots();
-    makeChallenges();
+     quick_test();
+//     generate_plots();
+//    makeChallenges();
 
     return 0;
 }

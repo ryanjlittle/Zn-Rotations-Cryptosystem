@@ -30,6 +30,22 @@ MatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix) {
     return eigen_matrix;
 }
 
+
+MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix) {
+    if (matrix.empty()) {
+        throw std::invalid_argument("Provided matrix must be non-empty");
+    }
+    int cols = matrix.size();
+    int rows = matrix.at(0).size();
+    MatrixXm eigen_matrix(rows, cols);
+    for (int i=0; i<rows; i++) {
+        for (int j=0; j<cols; j++) {
+            eigen_matrix(i,j) = matrix.at(j).at(i);
+        }
+    }
+    return eigen_matrix;
+}
+
 MatrixXm read_matrix_from_file(std::string file, int rows, int cols){
     MatrixXm matrix(rows, cols);
     std::fstream f(file);
