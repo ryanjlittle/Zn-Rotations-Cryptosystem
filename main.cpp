@@ -37,8 +37,8 @@ void generate_plots() {
     mpfr::mpreal::set_default_prec(256);
     int num_trials = 100;
     int s = 10;
-    std::vector<int> n_vals {32, 64, 128};
-    std::vector<double> r_vals {0.1, 0.25, 0.4};
+    std::vector<int> n_vals{32, 64, 128};
+    std::vector<double> r_vals{0.1, 0.25, 0.4};
     std::vector<double> d_vals;
     std::vector<double> correctness_uniform, correctness_near_lattice;
     int plot_col;
@@ -46,13 +46,13 @@ void generate_plots() {
 
     std::cout.precision(3);
 
-    for (int n : n_vals) {
+    for (int n: n_vals) {
         int k = n + 10;
         Cryptosystem cryptosystem(n, k, 0, s, 0);
         cryptosystem.generate_keys();
         plot_col = 0;
 
-        for (double r : r_vals) {
+        for (double r: r_vals) {
 
             correctness_uniform.clear();
             correctness_near_lattice.clear();
@@ -62,10 +62,10 @@ void generate_plots() {
             double d_calculated = (1.0 / 12.0 - d_prime) * n;
 
             for (double d = 0.1; d < 12; d += 0.4) {
-                d_vals.push_back (d);
+                d_vals.push_back(d);
 
-                cryptosystem.set_r (r);
-                cryptosystem.set_d (d);
+                cryptosystem.set_r(r);
+                cryptosystem.set_d(d);
 
                 double correct_prob_uniform = decryption_correctness_prob_uniform(cryptosystem, num_trials);
                 double correct_prob_near_lattice = decryption_correctness_prob_near_lattice(cryptosystem, num_trials);
@@ -73,10 +73,12 @@ void generate_plots() {
                 correctness_near_lattice.push_back(correct_prob_near_lattice);
 
                 std::cout << std::endl << "n = " << n << ", r = " << r << ", d = " << d << std::endl;
-                std::cout << std::fixed << correct_prob_uniform << " correctness probability, uniform sample" << std::endl;
-                std::cout << std::fixed << correct_prob_near_lattice << " correctness probability, near-lattice sample" << std::endl;
+                std::cout << std::fixed << correct_prob_uniform << " correctness probability, uniform sample"
+                          << std::endl;
+                std::cout << std::fixed << correct_prob_near_lattice << " correctness probability, near-lattice sample"
+                          << std::endl;
             }
-            plt::subplot2grid (n_vals.size(), r_vals.size(), plot_row, plot_col);
+            plt::subplot2grid(n_vals.size(), r_vals.size(), plot_row, plot_col);
             plt::tight_layout();
             plt::named_plot("uniform sample", d_vals, correctness_uniform);
             plt::named_plot("near-lattice sample", d_vals, correctness_near_lattice);
@@ -85,7 +87,7 @@ void generate_plots() {
             plt::xlabel("d value");
             char title[40];
             sprintf(title, "n = %d, r = %.2f", n, r);
-            plt::title(std::string (title));
+            plt::title(std::string(title));
             plt::legend();
             plot_col++;
         }
@@ -112,7 +114,8 @@ void quick_test() {
     double correct_prob_uniform = decryption_correctness_prob_uniform(cryptosystem, num_trials);
     double correct_prob_near_lattice = decryption_correctness_prob_near_lattice(cryptosystem, num_trials);
     std::cout << std::fixed << correct_prob_uniform << " correctness probability, uniform sample" << std::endl;
-    std::cout << std::fixed << correct_prob_near_lattice << " correctness probability, near-lattice sample" << std::endl;
+    std::cout << std::fixed << correct_prob_near_lattice << " correctness probability, near-lattice sample"
+              << std::endl;
 }
 
 
@@ -123,7 +126,7 @@ void makeChallenges() {
     double r = 0.081583;
     double d = 0.0421963 * n;
     double s = 100;
-    Cryptosystem cryptosystem(n, n+10, r, s, d);
+    Cryptosystem cryptosystem(n, n + 10, r, s, d);
     generateChallenges(cryptosystem, 20, "challenges/n512_2E-40");
 }
 
@@ -131,7 +134,7 @@ void makeChallenges() {
 int main() {
     // Uncomment one of the following to run a test
 
-     quick_test();
+    quick_test();
 //     generate_plots();
 //    makeChallenges();
 

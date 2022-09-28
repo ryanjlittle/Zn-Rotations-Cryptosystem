@@ -1,7 +1,6 @@
 #include "cryptosystem.h"
 
 
-
 /**
  *
  * @param u "Base" vector
@@ -18,9 +17,9 @@ MatrixXm apply_gram_schmidt(MatrixXm matrix) {
     MatrixXm orthonormalized(rows, cols);
 
     orthonormalized.col(0) = matrix.col(0);
-    for (int i=1; i<cols; i++) {
+    for (int i = 1; i < cols; i++) {
         VectorXm orthonormalized_col = matrix.col(i);
-        for (int j=0; j<i; j++) {
+        for (int j = 0; j < i; j++) {
             if (!orthonormalized.col(j).isZero(EPS)) {
                 orthonormalized_col -= project(orthonormalized.col(j), matrix.col(i));
             }
@@ -37,17 +36,16 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
     int N = gen_set.cols();
 
     bool swap_condition;
-    do
-    {
+    do {
         MatrixXm basis;
         Eigen::HouseholderQR<MatrixXm> QR(gen_set);
         MatrixXm Q = QR.householderQ();
         MatrixXm R = QR.matrixQR().triangularView<Eigen::Upper>();
         std::vector<int> non_zero_gram_schmidt_indices, zero_gram_schmidt_indices;
         non_zero_gram_schmidt_indices.push_back(0);
-        int k=1;
+        int k = 1;
         for (int i = 1; i < N; i++) {
-            int j = k-1;
+            int j = k - 1;
             if (k < m && abs(R(k, i)) > EPS) {
                 k++;
                 non_zero_gram_schmidt_indices.push_back(i);
@@ -64,10 +62,8 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
 
         // Filter out identically zero columns
         // in addition delete zero columns from R
-        for (int i = N - 1; i >= 0; i--)
-        {
-            if (gen_set.col(i).isZero(EPS))
-            {
+        for (int i = N - 1; i >= 0; i--) {
+            if (gen_set.col(i).isZero(EPS)) {
                 N--;
                 gen_set.block(0, i, m, N - i) = gen_set.rightCols(N - i);
                 gen_set.conservativeResize(m, N);
@@ -78,8 +74,8 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
 
         swap_condition = false;
         int first_zero_gram_schmidt_index;
-        for (int i=1; i<m; i++) {
-            if (abs(R(i,i)) < EPS) {
+        for (int i = 1; i < m; i++) {
+            if (abs(R(i, i)) < EPS) {
                 swap_condition = true;
                 first_zero_gram_schmidt_index = i;
                 break;
@@ -90,10 +86,9 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
             first_zero_gram_schmidt_index = m;
         }
 
-        if (swap_condition)
-        {
-            int j=0;
-            for (int i=first_zero_gram_schmidt_index-1; i>=0; i--) {
+        if (swap_condition) {
+            int j = 0;
+            for (int i = first_zero_gram_schmidt_index - 1; i >= 0; i--) {
                 if (abs(R(i, first_zero_gram_schmidt_index)) > EPS) {
                     j = i;
                     break;
@@ -103,7 +98,7 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
             gen_set.col(first_zero_gram_schmidt_index) = gen_set.col(j);
             gen_set.col(j) = temp;
         }
-    } while(swap_condition);
+    } while (swap_condition);
     return gen_set;
 }
 
@@ -145,7 +140,7 @@ void Cryptosystem::generate_keys() {
 
 std::vector<VectorXm> Cryptosystem::encrypt_rep_code(MatrixXm pk, bool b, int m) {
     std::vector<VectorXm> ctext(m);
-    for (int i=0; i<m; i++) {
+    for (int i = 0; i < m; i++) {
         ctext.at(i) = this->encrypt(pk, b);
     }
     return ctext;
@@ -153,18 +148,17 @@ std::vector<VectorXm> Cryptosystem::encrypt_rep_code(MatrixXm pk, bool b, int m)
 
 bool Cryptosystem::decrypt_rep_code(MatrixXm sk, std::vector<VectorXm> c, int m) {
     int ones = 0;
-    for (int i=0; i<m; i++) {
+    for (int i = 0; i < m; i++) {
         if (this->decrypt(sk, c.at(i))) {
             ones++;
         }
-        if (ones > m/2) {
+        if (ones > m / 2) {
             return 1;
-        }
-        else if (i-ones > m/2) {
+        } else if (i - ones > m / 2) {
             return 0;
         }
     }
-    return ones > m/2; // Unreachable so long as m is odd
+    return ones > m / 2; // Unreachable so long as m is odd
 }
 
 VectorXm Cryptosystem::encrypt(MatrixXm pk, bool b) {
@@ -173,21 +167,20 @@ VectorXm Cryptosystem::encrypt(MatrixXm pk, bool b) {
         osuCrypto::PRNG prng;
         prng.SetSeed(osuCrypto::sysRandomSeed());
         VectorXm sampled_vec = VectorXm(n);
-        for (int i=0; i<n; i++) {
+        for (int i = 0; i < n; i++) {
             sampled_vec(i) = uniform_distr(prng);
         }
         return sampled_vec;
-    }
-    else {
+    } else {
 
         VectorXm zeros = VectorXm::Zero(n);
-        MatrixXm covariance_mat = pow(r, 2) / (2*M_PI) * pk;
+        MatrixXm covariance_mat = pow(r, 2) / (2 * M_PI) * pk;
 
         Eigen::EigenMultivariateNormal<mpfr::mpreal> sampler(zeros, covariance_mat);
         MatrixXm sampled_vec = sampler.samples(1);
 
         // return sampled vector modulo 1
-        for (int i=0; i<n; i++) {
+        for (int i = 0; i < n; i++) {
             mpfr::mpreal elem_mod_1 = fmod(sampled_vec(i), 1);
             if (elem_mod_1 < 0) {
                 elem_mod_1 += 1;
@@ -202,7 +195,7 @@ bool Cryptosystem::decrypt(MatrixXm sk, VectorXm c) {
 
     MatrixXm t = sk * c;
     mpfr::mpreal dist_from_lattice = 0;
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         dist_from_lattice += pow(t(i) - round(t(i)), 2);
     }
     return dist_from_lattice > d;
