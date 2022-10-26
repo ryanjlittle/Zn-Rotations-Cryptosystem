@@ -37,6 +37,8 @@ MatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix);
 
 MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix);
 
+fplll::ZZ_mat<mpz_t> eigen_mat_to_fplll_ZZ_mat(MatrixXm matrix);
+
 /**
  * Reads an integer matrix in from a file. File must be space delimited and contain no additional formatting. Lines in
  * the file will correspond to rows in the matrix.

@@ -72,7 +72,7 @@ public:
     void generate_keys();
 
     /**
-    * Encrypts a bit under a public key. If b=2, ciphertext is sampled uniformly from [0,1)^n.
+    * Encrypts a bit under a public key. If b=1, ciphertext is sampled uniformly from [0,1)^n.
      * Otherwise, ciphertext is sampled from continuous Gaussian with covariance matrix r^2*G^{-1}, and taken modulo 1.
      *
      * @param pk The public key, G^{-1}
@@ -113,9 +113,13 @@ public:
      */
     bool decrypt_rep_code(MatrixXm sk, std::vector<VectorXm> c, int m);
 
-    const MatrixXm &getB() { return B; }
+    const MatrixXm &get_B() { return B; }
 
-    const MatrixXm &getG_inv() { return G_inv; }
+    const MatrixXm &get_G_inv() { return G_inv; }
+
+    const int get_n() { return n; }
+
+    const double get_d() { return d; }
 
     void set_B(const MatrixXm &b) { this->B = b; }
 

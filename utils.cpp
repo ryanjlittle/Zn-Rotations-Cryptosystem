@@ -46,6 +46,25 @@ MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix) {
     return eigen_matrix;
 }
 
+fplll::ZZ_mat<mpz_t> eigen_mat_to_fplll_ZZ_mat(MatrixXm matrix) {
+    if (matrix.size() <= 0) {
+        throw std::invalid_argument("Provided matrix must be non-empty");
+    }
+    // These are flipped because we want to take the transpose
+    int cols = matrix.cols();
+    int rows = matrix.rows();
+    fplll::ZZ_mat<mpz_t> fplll_matrix(rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            mpz_t val;
+            mpz_init(val);
+            mpfr_get_z(val, matrix(i,j).mpfr_srcptr(), MPFR_RNDN);
+            fplll_matrix(i,j) = val;
+        }
+    }
+    return fplll_matrix;
+}
+
 MatrixXm read_matrix_from_file(std::string file, int rows, int cols) {
     MatrixXm matrix(rows, cols);
     std::fstream f(file);

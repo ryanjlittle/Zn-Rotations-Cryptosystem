@@ -1,6 +1,7 @@
 #include <iostream>
 #include "cryptosystem.h"
 #include "generateChallenges.h"
+#include "LLLattack.h"
 #include "matplotlib-cpp/matplotlibcpp.h"
 
 namespace plt = matplotlibcpp;
@@ -8,10 +9,10 @@ namespace plt = matplotlibcpp;
 double decryption_correctness_prob_uniform(Cryptosystem cryptosystem, int num_trials) {
     int correct_decryptions = 0;
     for (int i = 0; i < num_trials; i++) {
-//        VectorXm ctext = cryptosystem.encrypt(cryptosystem.getG_inv(), true);
-//        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
-        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.getG_inv(), true, 3);
-        bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.getB(), ctext, 3);
+//        VectorXm ctext = cryptosystem.encrypt(cryptosystem.get_G_inv(), true);
+//        bool decryption = cryptosystem.decrypt(cryptosystem.get_B(), ctext);
+        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.get_G_inv(), true, 3);
+        bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.get_B(), ctext, 3);
         if (decryption) {
             correct_decryptions++;
         }
@@ -22,10 +23,10 @@ double decryption_correctness_prob_uniform(Cryptosystem cryptosystem, int num_tr
 double decryption_correctness_prob_near_lattice(Cryptosystem cryptosystem, int num_trials) {
     int correct_decryptions = 0;
     for (int i = 0; i < num_trials; i++) {
-//        VectorXm ctext = cryptosystem.encrypt(cryptosystem.getG_inv(), false);
-//        bool decryption = cryptosystem.decrypt(cryptosystem.getB(), ctext);
-        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.getG_inv(), false, 3);
-        bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.getB(), ctext, 3);
+//        VectorXm ctext = cryptosystem.encrypt(cryptosystem.get_G_inv(), false);
+//        bool decryption = cryptosystem.decrypt(cryptosystem.get_B(), ctext);
+        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.get_G_inv(), false, 3);
+        bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.get_B(), ctext, 3);
         if (!decryption) {
             correct_decryptions++;
         }
@@ -98,7 +99,7 @@ void generate_plots() {
 
 void quick_test() {
     mpfr::mpreal::set_default_prec(256);
-    int n = 128;
+    int n = 16;
     double r = 0.8;
     double d_prime = exp(-M_PI * r * r) / 20.0;
     double d = (1.0 / 12.0 - d_prime) * n;
@@ -122,21 +123,45 @@ void quick_test() {
 void makeChallenges() {
     mpfr::mpreal::set_default_prec(256);
     // Modify these values for each challenge
-    int n = 512;
+    int n = 64;
     double r = 0.081583;
     double d = 0.0421963 * n;
     double s = 100;
     Cryptosystem cryptosystem(n, n + 10, r, s, d);
-    generateChallenges(cryptosystem, 20, "challenges/n512_2E-40");
+    generateChallenges(cryptosystem, 20, "challenges/n64_0");
+}
+
+void testAttack() {
+    mpfr::mpreal::set_default_prec(256);
+    int n = 128;
+    double r = 0.081583;
+    double d = 0.0421963 * n;
+    double s = 10;
+    Cryptosystem cryptosystem(n, n + 10, r, s, d);
+    cryptosystem.generate_keys();
+    LLLattack lllattack(cryptosystem);
+
+    int num_trials = 1;
+    int correct_decryptions = 0;
+    for (int i=0; i<num_trials; i++) {
+        VectorXm c = cryptosystem.encrypt(cryptosystem.get_G_inv(), false);
+        if (!lllattack.decrypt(c)) {
+            correct_decryptions++;
+        }
+    }
+    std::cout << "Decryption correctnes: " << (double) correct_decryptions / num_trials << std::endl;
+
+
 }
 
 
 int main() {
     // Uncomment one of the following to run a test
 
-    quick_test();
+//    quick_test();
 //     generate_plots();
 //    makeChallenges();
+    testAttack();
 
     return 0;
 }
