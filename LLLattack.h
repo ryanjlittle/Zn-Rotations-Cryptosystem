@@ -7,7 +7,7 @@
 
 #include "cryptosystem.h"
 
-#define MULT_CONST 1e10
+#define MULT_CONST 1e15
 
 class LLLattack {
 
@@ -33,7 +33,17 @@ private:
     MatrixXm L;
 
 public:
+    /**
+     * Constructor
+     * @param cryptosystem Cryptosystem to be attacked. Keys must be generated before running attack.
+     */
     LLLattack(Cryptosystem cryptosystem);
+
+    /**
+     * Run attack on given ciphertext c.
+     * @param c
+     * @return
+     */
     bool decrypt(VectorXm c);
 };
 
