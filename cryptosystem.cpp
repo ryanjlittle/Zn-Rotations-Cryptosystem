@@ -1,35 +1,5 @@
 #include "cryptosystem.h"
 
-
-/**
- *
- * @param u "Base" vector
- * @param v "Projector" vector, to be projected onto u
- * @return
- */
-VectorXm project(VectorXm u, VectorXm v) {
-    return u.dot(v) / u.dot(u) * u;
-}
-
-MatrixXm apply_gram_schmidt(MatrixXm matrix) {
-    int rows = matrix.rows();
-    int cols = matrix.cols();
-    MatrixXm orthonormalized(rows, cols);
-
-    orthonormalized.col(0) = matrix.col(0);
-    for (int i = 1; i < cols; i++) {
-        VectorXm orthonormalized_col = matrix.col(i);
-        for (int j = 0; j < i; j++) {
-            if (!orthonormalized.col(j).isZero(EPS)) {
-                orthonormalized_col -= project(orthonormalized.col(j), matrix.col(i));
-            }
-        }
-        orthonormalized.col(i) = orthonormalized_col;
-    }
-    return orthonormalized;
-}
-
-
 MatrixXm convert_to_basis(MatrixXm gen_set) {
 
     int m = gen_set.rows();
@@ -39,9 +9,9 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
     do {
         MatrixXm basis;
         Eigen::HouseholderQR<MatrixXm> QR(gen_set);
-        MatrixXm Q = QR.householderQ();
         MatrixXm R = QR.matrixQR().triangularView<Eigen::Upper>();
-        std::vector<int> non_zero_gram_schmidt_indices, zero_gram_schmidt_indices;
+
+        std::vector<int> non_zero_gram_schmidt_indices;
         non_zero_gram_schmidt_indices.push_back(0);
         int k = 1;
         for (int i = 1; i < N; i++) {
@@ -49,8 +19,6 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
             if (k < m && abs(R(k, i)) > EPS) {
                 k++;
                 non_zero_gram_schmidt_indices.push_back(i);
-            } else {
-                zero_gram_schmidt_indices.push_back(i);
             }
 
             for (; j >= 0; j--) {
@@ -60,8 +28,7 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
             }
         }
 
-        // Filter out identically zero columns
-        // in addition delete zero columns from R
+        // Filter out identically zero columns from gen_set, delete corresponding columns from R as well.
         for (int i = N - 1; i >= 0; i--) {
             if (gen_set.col(i).isZero(EPS)) {
                 N--;
@@ -73,6 +40,7 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
         }
 
         swap_condition = false;
+        // Find first zero Gram-Schmidt vector by finding first zero on R's diagonal
         int first_zero_gram_schmidt_index;
         for (int i = 1; i < m; i++) {
             if (abs(R(i, i)) < EPS) {
@@ -81,12 +49,14 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
                 break;
             }
         }
+        // If no zero found on R's diagonal, m-th Gram-Schmidt vector is the first zero G-S vector (if it exists)
         if (!swap_condition && m < N) {
             swap_condition = true;
             first_zero_gram_schmidt_index = m;
         }
 
         if (swap_condition) {
+            // Find minimum index j such that the first zero gram-schmidt index is in span{b_1, ..., b_j}
             int j = 0;
             for (int i = first_zero_gram_schmidt_index - 1; i >= 0; i--) {
                 if (abs(R(i, first_zero_gram_schmidt_index)) > EPS) {
@@ -94,6 +64,7 @@ MatrixXm convert_to_basis(MatrixXm gen_set) {
                     break;
                 }
             }
+            // Swap columns j and first_zero_gram_schmidt_index
             MatrixXm temp = gen_set.col(first_zero_gram_schmidt_index);
             gen_set.col(first_zero_gram_schmidt_index) = gen_set.col(j);
             gen_set.col(j) = temp;
@@ -107,19 +78,17 @@ void Cryptosystem::generate_keys() {
     MatrixXm basis;
     do {
         std::vector<std::vector<int>> gen_set = sample_discrete_gaussian_vectors(k, n, s);
-        MatrixXm gen_set_eigen = std_vector_to_Eigen_mat(gen_set);
-        basis = convert_to_basis(gen_set_eigen);
 
-        /*
+        // Uncomment this and comment out the next 5 lines to run the alternate rotation-invariant basis reduction algo
+        //  MatrixXm gen_set_eigen = std_vector_to_Eigen_mat(gen_set);
+        //  basis = convert_to_basis(gen_set_eigen);
+
         fplll::ZZ_mat<mpz_t> sampled_matrix_fplll = std_vector_to_fplll_ZZ_mat(gen_set);
-
         fplll::lll_reduction(sampled_matrix_fplll, fplll::LLL_DEF_DELTA, fplll::LLL_DEF_ETA,
             fplll::LM_WRAPPER, fplll::FT_DEFAULT, 0, fplll::LLL_VERBOSE);
         MatrixXm sampled_matrix_eigen = fplll_ZZ_mat_to_Eigen_mat(sampled_matrix_fplll);
-
         // get the last n rows of sampled matrix
-        basis = sampled_matrix_eigen.block(k-n, 0, n, n);
-         */
+        basis = sampled_matrix_eigen.block(0, k-n, n, n);
 
         // Loop until 0.5 < det(basis) < 1.5, to ensure basis actually generates Z^n
     } while (!(0.5 < abs(basis.determinant()) && abs(basis.determinant()) < 1.5));
@@ -138,20 +107,23 @@ void Cryptosystem::generate_keys() {
     this->G_inv = G_inv;
 }
 
-std::vector<VectorXm> Cryptosystem::encrypt_rep_code(MatrixXm pk, bool b, int m) {
-    std::vector<VectorXm> ctext(m);
+MatrixXm Cryptosystem::encrypt_rep_code(MatrixXm pk, bool b, int m) {
+    assert(m%2 == 1);
+    MatrixXm ctext(this->n, m);
     for (int i = 0; i < m; i++) {
-        ctext.at(i) = this->encrypt(pk, b);
+        ctext.col(i) = this->encrypt(pk, b);
     }
     return ctext;
 }
 
-bool Cryptosystem::decrypt_rep_code(MatrixXm sk, std::vector<VectorXm> c, int m) {
+bool Cryptosystem::decrypt_rep_code(MatrixXm sk, MatrixXm c, int m) {
+    assert(m%2 == 1);
     int ones = 0;
     for (int i = 0; i < m; i++) {
-        if (this->decrypt(sk, c.at(i))) {
+        if (this->decrypt(sk, c.col(i))) {
             ones++;
         }
+        // Exit early if we have a majority of 1s or 0s
         if (ones > m / 2) {
             return 1;
         } else if (i - ones > m / 2) {
@@ -200,3 +172,4 @@ bool Cryptosystem::decrypt(MatrixXm sk, VectorXm c) {
     }
     return dist_from_lattice > d;
 }
+
