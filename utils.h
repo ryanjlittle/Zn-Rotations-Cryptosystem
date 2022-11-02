@@ -28,15 +28,26 @@ typedef Eigen::Vector<mpfr::mpreal, Eigen::Dynamic> VectorXm;
 fplll::ZZ_mat<mpz_t> std_vector_to_fplll_ZZ_mat(std::vector<std::vector<int>> matrix);
 
 /**
- * Converts a matrix from fplll form to Eigen form (with mpfr type)
+ * Converts a matrix from std::vector form to fplll form.
+ * @param matrix A std::vector of std::vectors.
+ * @return The matrix in Eigen format.
+ */
+MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix);
+
+/**
+ * Converts a matrix from fplll form to Eigen form (with mpfr type). Returns the transpose of the provided matrix, since
+ * fplll runs row-based LLL but the rest of the code is column-based.
  * @param fplll_matrix A fplll integer matrix
- * @return The matrix in Eigen form
+ * @return The transpose of the given matrix in Eigen form
  */
 MatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix);
 
-
-MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix);
-
+/**
+ * Converts a matrix from Eigen form with mpfr type to fplll form. Returns the transpose of the provided matrix, since
+ * fplll runs row-based LLL but the rest of the code is column-based.
+ * @param matrix An Eigen matrix with mpfr entries
+ * @return The transpose of the given matrix in fplll form
+ */
 fplll::ZZ_mat<mpz_t> eigen_mat_to_fplll_ZZ_mat(MatrixXm matrix);
 
 /**

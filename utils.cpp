@@ -15,22 +15,6 @@ fplll::ZZ_mat<mpz_t> std_vector_to_fplll_ZZ_mat(std::vector<std::vector<int>> ma
     return fplll_matrix;
 }
 
-MatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix) {
-    if (fplll_matrix.empty()) {
-        throw std::invalid_argument("Provided matrix must be non-empty");
-    }
-    int rows = fplll_matrix.r;
-    int cols = fplll_matrix.c;
-    MatrixXm eigen_matrix(rows, cols);
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            eigen_matrix(i, j) = fplll_matrix(i, j).get_si();
-        }
-    }
-    return eigen_matrix;
-}
-
-
 MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix) {
     if (matrix.empty()) {
         throw std::invalid_argument("Provided matrix must be non-empty");
@@ -46,19 +30,37 @@ MatrixXm std_vector_to_Eigen_mat(std::vector<std::vector<int>> matrix) {
     return eigen_matrix;
 }
 
+MatrixXm fplll_ZZ_mat_to_Eigen_mat(fplll::ZZ_mat<mpz_t> fplll_matrix) {
+    if (fplll_matrix.empty()) {
+        throw std::invalid_argument("Provided matrix must be non-empty");
+    }
+    // fplll runs row-based LLL, but the rest of the code is column-based, so we take the transpose when converting
+    // back from fplll
+    int rows = fplll_matrix.c;
+    int cols = fplll_matrix.r;
+    MatrixXm eigen_matrix(rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            eigen_matrix(i, j) = fplll_matrix(j, i).get_si();
+        }
+    }
+    return eigen_matrix;
+}
+
 fplll::ZZ_mat<mpz_t> eigen_mat_to_fplll_ZZ_mat(MatrixXm matrix) {
     if (matrix.size() <= 0) {
         throw std::invalid_argument("Provided matrix must be non-empty");
     }
-    // These are flipped because we want to take the transpose
-    int cols = matrix.cols();
-    int rows = matrix.rows();
+    // fplll runs row-based LLL, but the rest of the code is column-based, so we take the transpose when converting
+    // back from fplll
+    int rows = matrix.cols();
+    int cols = matrix.rows();
     fplll::ZZ_mat<mpz_t> fplll_matrix(rows, cols);
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             mpz_t val;
             mpz_init(val);
-            mpfr_get_z(val, matrix(i,j).mpfr_srcptr(), MPFR_RNDN);
+            mpfr_get_z(val, matrix(j,i).mpfr_srcptr(), MPFR_RNDN);
             fplll_matrix(i,j) = val;
         }
     }
