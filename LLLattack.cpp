@@ -33,13 +33,12 @@ bool LLLattack::decrypt(VectorXm c) {
     MatrixXm reduced = fplll_ZZ_mat_to_Eigen_mat(B_prime_fplll) / MULT_CONST;
 
     MatrixXm v = fplll_ZZ_mat_to_Eigen_mat(B_prime_fplll).col(0) / MULT_CONST;
-
-    VectorXm xy = B_prime.colPivHouseholderQr().solve(v);
-    assert((B_prime * xy).isApprox(v));
-
     if (v.squaredNorm() > this->d ) {
         return true;
     }
 
-    return abs(abs(xy[n]) - 1) < EPS;
+    VectorXm xy = B_prime.colPivHouseholderQr().solve(v);
+    assert((B_prime * xy).isApprox(v));
+
+    return abs(abs(xy[n]) - 1) > EPS;
 }
