@@ -44,7 +44,7 @@ public:
      * @param c
      * @return
      */
-    bool decrypt(VectorXm c);
+    bool decrypt(VectorXm c, int block_size);
 };
 
 

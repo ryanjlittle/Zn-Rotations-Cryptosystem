@@ -12,7 +12,7 @@ LLLattack::LLLattack(Cryptosystem cryptosystem) {
     assert((L.transpose() * L).isApprox(G, 1e-10));
 }
 
-bool LLLattack::decrypt(VectorXm c) {
+bool LLLattack::decrypt(VectorXm c, int block_size) {
     MatrixXm B_prime_x(n, n+1);
     B_prime_x << this->L, this->L * c;
 
@@ -28,7 +28,6 @@ bool LLLattack::decrypt(VectorXm c) {
     // Run BKZ on B_prime. Since fplll requires integer valued inputs, we multiply by a large constant MULT_CONST and
     // round to nearest integer before BKZ reducing.
     fplll::ZZ_mat<mpz_t> B_prime_fplll = eigen_mat_to_fplll_ZZ_mat(MULT_CONST * B_prime);
-    int block_size = 5;
     fplll::bkz_reduction(B_prime_fplll, block_size);
     MatrixXm reduced = fplll_ZZ_mat_to_Eigen_mat(B_prime_fplll) / MULT_CONST;
 

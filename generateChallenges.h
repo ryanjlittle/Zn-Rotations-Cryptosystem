@@ -18,4 +18,13 @@
  */
 void generateChallenges(Cryptosystem cryptosystem, int num_challenges, std::string path);
 
+/**
+ * Generates repetition code challenges for a given cryptosystem.
+ * @param cryptosystem
+ * @param num_challenges
+ * @param rep
+ * @param path
+ */
+void generateChallengesRepCode(Cryptosystem cryptosystem, int num_challenges, int rep, std::string path);
+
 #endif //ZNROTATIONCRYPTOSYSTEM__GENERATECHALLENGES_H_

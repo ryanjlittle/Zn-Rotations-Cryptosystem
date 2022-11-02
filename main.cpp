@@ -2,16 +2,13 @@
 #include "cryptosystem.h"
 #include "generateChallenges.h"
 #include "LLLattack.h"
-#include "matplotlib-cpp/matplotlibcpp.h"
-
-namespace plt = matplotlibcpp;
 
 double decryption_correctness_prob_uniform(Cryptosystem cryptosystem, int num_trials) {
     int correct_decryptions = 0;
     for (int i = 0; i < num_trials; i++) {
 //        VectorXm ctext = cryptosystem.encrypt(cryptosystem.get_G_inv(), true);
 //        bool decryption = cryptosystem.decrypt(cryptosystem.get_B(), ctext);
-        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.get_G_inv(), true, 3);
+        MatrixXm ctext = cryptosystem.encrypt_rep_code(cryptosystem.get_G_inv(), true, 3);
         bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.get_B(), ctext, 3);
         if (decryption) {
             correct_decryptions++;
@@ -25,7 +22,7 @@ double decryption_correctness_prob_near_lattice(Cryptosystem cryptosystem, int n
     for (int i = 0; i < num_trials; i++) {
 //        VectorXm ctext = cryptosystem.encrypt(cryptosystem.get_G_inv(), false);
 //        bool decryption = cryptosystem.decrypt(cryptosystem.get_B(), ctext);
-        std::vector<VectorXm> ctext = cryptosystem.encrypt_rep_code(cryptosystem.get_G_inv(), false, 3);
+        MatrixXm ctext = cryptosystem.encrypt_rep_code(cryptosystem.get_G_inv(), false, 3);
         bool decryption = cryptosystem.decrypt_rep_code(cryptosystem.get_B(), ctext, 3);
         if (!decryption) {
             correct_decryptions++;
@@ -34,78 +31,13 @@ double decryption_correctness_prob_near_lattice(Cryptosystem cryptosystem, int n
     return double(correct_decryptions) / double(num_trials);
 }
 
-void generate_plots() {
-    mpfr::mpreal::set_default_prec(256);
-    int num_trials = 100;
-    int s = 10;
-    std::vector<int> n_vals{32, 64, 128};
-    std::vector<double> r_vals{0.1, 0.25, 0.4};
-    std::vector<double> d_vals;
-    std::vector<double> correctness_uniform, correctness_near_lattice;
-    int plot_col;
-    int plot_row = 0;
-
-    std::cout.precision(3);
-
-    for (int n: n_vals) {
-        int k = n + 10;
-        Cryptosystem cryptosystem(n, k, 0, s, 0);
-        cryptosystem.generate_keys();
-        plot_col = 0;
-
-        for (double r: r_vals) {
-
-            correctness_uniform.clear();
-            correctness_near_lattice.clear();
-            d_vals.clear();
-
-            double d_prime = exp(-M_PI * r * r) / 20.0;
-            double d_calculated = (1.0 / 12.0 - d_prime) * n;
-
-            for (double d = 0.1; d < 12; d += 0.4) {
-                d_vals.push_back(d);
-
-                cryptosystem.set_r(r);
-                cryptosystem.set_d(d);
-
-                double correct_prob_uniform = decryption_correctness_prob_uniform(cryptosystem, num_trials);
-                double correct_prob_near_lattice = decryption_correctness_prob_near_lattice(cryptosystem, num_trials);
-                correctness_uniform.push_back(correct_prob_uniform);
-                correctness_near_lattice.push_back(correct_prob_near_lattice);
-
-                std::cout << std::endl << "n = " << n << ", r = " << r << ", d = " << d << std::endl;
-                std::cout << std::fixed << correct_prob_uniform << " correctness probability, uniform sample"
-                          << std::endl;
-                std::cout << std::fixed << correct_prob_near_lattice << " correctness probability, near-lattice sample"
-                          << std::endl;
-            }
-            plt::subplot2grid(n_vals.size(), r_vals.size(), plot_row, plot_col);
-            plt::tight_layout();
-            plt::named_plot("uniform sample", d_vals, correctness_uniform);
-            plt::named_plot("near-lattice sample", d_vals, correctness_near_lattice);
-            plt::axvline(d_calculated);
-            plt::ylabel("Probability of correct decryption");
-            plt::xlabel("d value");
-            char title[40];
-            sprintf(title, "n = %d, r = %.2f", n, r);
-            plt::title(std::string(title));
-            plt::legend();
-            plot_col++;
-        }
-        plot_row++;
-    }
-    plt::show();
-}
-
 void quick_test() {
-    mpfr::mpreal::set_default_prec(256);
-    int n = 16;
-    double r = 0.8;
-    double d_prime = exp(-M_PI * r * r) / 20.0;
-    double d = (1.0 / 12.0 - d_prime) * n;
+    int n = 128;
+    double r = 0.081583;
+    double d = 0.0421963 * n;
     int s = 10;
     int k = n + 10;
-    int num_trials = 50;
+    int num_trials = 10;
 
     Cryptosystem cryptosystem(n, k, r, s, d);
     std::cout << "Generating keys..." << std::endl;
@@ -121,47 +53,81 @@ void quick_test() {
 
 
 void makeChallenges() {
-    mpfr::mpreal::set_default_prec(256);
     // Modify these values for each challenge
-    int n = 64;
+    int n = 512;
     double r = 0.081583;
     double d = 0.0421963 * n;
     double s = 100;
     Cryptosystem cryptosystem(n, n + 10, r, s, d);
-    generateChallenges(cryptosystem, 20, "challenges/n64_0");
+    generateChallenges(cryptosystem, 20, "challenges/n512_2E-40");
 }
 
 void testAttack() {
-    mpfr::mpreal::set_default_prec(256);
     int n = 128;
-    double r = 0.081583;
-    double d = 0.0421963 * n;
-    double s = 10;
-    Cryptosystem cryptosystem(n, n + 10, r, s, d);
+    double rs[] = {0.00081583, 0.0081583, 0.081583, 0.81583, 8.1583};
+    double bk_sizes[] = {2, 3, 5, 10};
+    Cryptosystem cryptosystem(n, n + 10, 0, 10, 0);
     cryptosystem.generate_keys();
-    LLLattack lllattack(cryptosystem);
+    MatrixXm B = cryptosystem.get_B();
+    MatrixXm G_inv = cryptosystem.get_G_inv();
 
-    int num_trials = 1;
-    int correct_decryptions = 0;
-    for (int i=0; i<num_trials; i++) {
-        VectorXm c = cryptosystem.encrypt(cryptosystem.get_G_inv(), false);
-        if (!lllattack.decrypt(c)) {
-            correct_decryptions++;
+    int num_trials = 20;
+    for (int i=3; i<5; i++) {
+        std::cout << "=========== r = " << rs[i] << " ==============\n";
+        cryptosystem = Cryptosystem(n, n+10, rs[i], 10, 0.0421963 * 128);
+        cryptosystem.set_B(B);
+        cryptosystem.set_G_inv(G_inv);
+        LLLattack lllattack(cryptosystem);
+        for (int j=0; j<num_trials; j++) {
+            VectorXm c = cryptosystem.encrypt(cryptosystem.get_G_inv(), false);
+            int k=0;
+            int block_size;
+            do {
+                block_size = bk_sizes[k];
+                k++;
+                if (!lllattack.decrypt(c, block_size)) {
+                    std::cout << "Decrypted successfully with block size = " << block_size << std::endl;
+                    break;
+                }
+                if (k==4) {
+                    std::cout << "Not decrypted\n";
+                }
+            } while(k < 4);
         }
     }
-    std::cout << "Decryption correctnes: " << (double) correct_decryptions / num_trials << std::endl;
+}
 
+void makeChallengesRepCode() {
 
+    int ns[] = {128, 256, 256, 512, 512, 512, 512};
+    double rs[] = {0.081583, 0.39872, 0.081583, 0.530363, 0.39872, 0.275526, 0.081583};
+    double ds[] = {0.0421963, 0.0542451, 0.0421963, 0.0627648, 0.0542451, 0.0477076, 0.0421963};
+    std::string challenge_names[] = {"n128_fp2-10", "n256_fp2-10", "n256_fp2-20", "n512_fp2-10", "n512_fp2-20", "n512_fp2-30", "n512_fp2-40"};
+    double s = 10;
+    int reps = 3;
+    int num_challenges = 20;
+    for (int i=2; i<7; i++) {
+        std::string sk_file = "../keys/" + challenge_names[i] + "/private_key";
+        std::string pk_file = "../keys/" + challenge_names[i] + "/public_key";
+        std::string out_path = "../challenges/" + challenge_names[i];
+        Cryptosystem cryptosystem(ns[i], ns[i] + 10, rs[i], s, ds[i]*ns[i]);
+        cryptosystem.set_B(read_matrix_from_file(sk_file, ns[i], ns[i]));
+        cryptosystem.set_G_inv(read_matrix_from_file(pk_file, ns[i], ns[i]));
+
+        generateChallengesRepCode(cryptosystem, num_challenges, reps, out_path);
+    }
 }
 
 
 int main() {
+    mpfr::mpreal::set_default_prec(256);
     // Uncomment one of the following to run a test
 
-//    quick_test();
-//     generate_plots();
+    quick_test();
 //    makeChallenges();
-    testAttack();
+//    testAttack();
+//    makeChallenges();
+//    makeChallengesRepCode();
 
     return 0;
 }
